@@ -4,27 +4,27 @@
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/dictionaries
-.idea/**/shelf
+/demo/.idea/**/workspace.xml
+/demo/.idea/**/tasks.xml
+/demo/.idea/**/usage.statistics.xml
+/demo/.idea/**/dictionaries
+/demo/.idea/**/shelf
 
 # Generated files
-.idea/**/contentModel.xml
+/demo/.idea/**/contentModel.xml
 
 # Sensitive or high-churn files
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
-.idea/**/dbnavigator.xml
+/demo/.idea/**/dataSources/
+/demo/.idea/**/dataSources.ids
+/demo/.idea/**/dataSources.local.xml
+/demo/.idea/**/sqlDataSources.xml
+/demo/.idea/**/dynamic.xml
+/demo/.idea/**/uiDesigner.xml
+/demo/.idea/**/dbnavigator.xml
 
 # Gradle
-.idea/**/gradle.xml
-.idea/**/libraries
+/demo/.idea/**/gradle.xml
+/demo/.idea/**/libraries
 
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
@@ -43,45 +43,45 @@
 cmake-build-*/
 
 # Mongo Explorer plugin
-.idea/**/mongoSettings.xml
+/demo/.idea/**/mongoSettings.xml
 
 # File-based project format
 *.iws
 
 # IntelliJ
-out/
+/demo/out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
 # JIRA plugin
-atlassian-ide-plugin.xml
+/demo/atlassian-ide-plugin.xml
 
 # Cursive Clojure plugin
 .idea/replstate.xml
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-fabric.properties
+/demo/com_crashlytics_export_strings.xml
+/demo/crashlytics.properties
+/demo/crashlytics-build.properties
+/demo/fabric.properties
 
 # Editor-based Rest Client
-.idea/httpRequests
+/demo/.idea/httpRequests
 
 # Android studio 3.1+ serialized cache file
-.idea/caches/build_file_checksums.ser
+/demo/.idea/caches/build_file_checksums.ser
 
 ### Maven template
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
+/demo/target/
+/demo/pom.xml.tag
+/demo/pom.xml.releaseBackup
+/demo/pom.xml.versionsBackup
+/demo/pom.xml.next
+/demo/release.properties
+/demo/dependency-reduced-pom.xml
+/demo/buildNumber.properties
+/demo/.mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
+/demo/.mvn/wrapper/maven-wrapper.jar
 
