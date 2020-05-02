@@ -39,6 +39,7 @@
 # *.iml
 # *.ipr
 
+.DS_store
 # CMake
 cmake-build-*/
 
