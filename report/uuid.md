@@ -24,3 +24,7 @@ uuid()
 ```
 
 #### Groovy Script
+
+``` groovy
+UUID.randomUUID().toString()
+```

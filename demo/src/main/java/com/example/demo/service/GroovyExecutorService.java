@@ -21,7 +21,7 @@ public class GroovyExecutorService {
         GroovyShell shell = new GroovyShell(binding);
 
         try {
-            return shell.evaluate(new File("/Users/dilanth/Codes/goovy examples/demo/src/main/resources/groovy/" + fileName + ".groovy"));
+            return shell.evaluate(new File("/Users/dilanth/Codes/dataweave examples/dataweave-features/demo/src/main/resources/groovy/" + fileName + ".groovy"));
         } catch (IOException e) {
             throw new RuntimeException("Error loading groovy file");
         }

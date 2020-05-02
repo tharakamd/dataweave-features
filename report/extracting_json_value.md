@@ -28,5 +28,5 @@ payload.message
 #### Groovy Script
 
 ``` groovy
-payload.hello
+payload.message
 ```

@@ -1,0 +1,1 @@
+payload.findAll { it >= 2 }
