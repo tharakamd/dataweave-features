@@ -1,4 +1,4 @@
-# Extracting value from JSON
+# Math functions
 
 ## Description
 
@@ -24,9 +24,11 @@ random()
 ```
 
 #### Groovy Script
+``` groovy
+Math.random()
+```
 
-
-### Example 2
+### Example 2 (Sum)
 
 #### Input
 ``` javascript
@@ -52,7 +54,9 @@ sum(payload)
 ```
 
 #### Groovy Script
-
+``` groovy
+payload.sum()
+```
 
 ### Example 3
 
@@ -80,3 +84,6 @@ sqrt(avg(payload))
 ```
 
 #### Groovy Script
+``` groovy
+Math.sqrt(payload.sum()/payload.size())
+```

@@ -1,0 +1,1 @@
+Math.sqrt(payload.sum() / payload.size())
