@@ -3,6 +3,7 @@ package com.example.demo.service;
 import groovy.json.JsonSlurper;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -10,6 +11,9 @@ import java.io.IOException;
 
 @Service
 public class GroovyExecutorService {
+
+    @Value("${groovy_file_path}")
+    private String groovyFilePath;
 
     public Object evaluateWithGroovy(String json, String fileName) {
 
@@ -21,7 +25,7 @@ public class GroovyExecutorService {
         GroovyShell shell = new GroovyShell(binding);
 
         try {
-            return shell.evaluate(new File("/Users/dilanth/Codes/dataweave examples/dataweave-features/demo/src/main/resources/groovy/" + fileName + ".groovy"));
+            return shell.evaluate(new File(groovyFilePath + fileName + ".groovy"));
         } catch (IOException e) {
             throw new RuntimeException("Error loading groovy file");
         }

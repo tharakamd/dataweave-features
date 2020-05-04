@@ -86,3 +86,4 @@ cmake-build-*/
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 /demo/.mvn/wrapper/maven-wrapper.jar
 
+/report/datawave.code-workspace

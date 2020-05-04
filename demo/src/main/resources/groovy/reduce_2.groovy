@@ -1,0 +1,1 @@
+payload.inject(2) { total, element -> total * element }
