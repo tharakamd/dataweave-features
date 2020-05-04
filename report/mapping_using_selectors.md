@@ -121,3 +121,12 @@ payload.accountType.*admins map {
   accountInfo: $.Name ++ $.Company,
 }
 ```
+
+### Groovy Script
+
+```groovy
+payload.accountType*.admins.flatten().withIndex().collect{item,index -> [
+        index: index,
+        accountInfo: [item.Name , item.Company]
+]}
+```

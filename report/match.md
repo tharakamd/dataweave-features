@@ -30,3 +30,18 @@ fun function(arg) = arg match{
 ---
 function(payload.Company)
 ```
+
+### Groovy Script
+
+```groovy
+def function(arg){
+    def matcher = arg =~ "MuleSoft"
+    if(matcher.size() == 1) {
+        return "Match"
+    }else {
+        return arg
+    }
+}
+
+function(payload.Company)
+```

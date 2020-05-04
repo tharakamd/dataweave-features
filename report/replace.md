@@ -24,3 +24,7 @@ output application/json
 ```
 
 #### Groovy Script
+
+```groovy
+"California94117".replace("94117","ZIP")
+```

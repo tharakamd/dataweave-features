@@ -5,7 +5,7 @@
 * Change the value of  **groovy_file_path** property in the application.properties file to the groovy script location in your PC.
 * Run the main method in DemoApplication class.
 * Send POST requests to localhost:8080 with the request body as required and the script name as a path param.
-* No need to restart server after adding or editing a groovy script.
+* No need to restart the server after adding or editing a groovy script.
 ### Example CURL request
 
 ``` curl

@@ -1,1 +1,1 @@
-[accountInfo: payload.accountType.users.flatten()]
+payload.accountType*.users.flatten()
