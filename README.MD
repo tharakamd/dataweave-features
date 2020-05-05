@@ -22,6 +22,10 @@
 * [Scan](/report/scan.md)
 * [Split by](/report/split_by.md)
 * [XML](/report/xml_attribute_selector.md)
+* [XML insert](/report/insert_xml.md)
 * [Zip](/report/zip.md)
+* [Pick Top Elements](/report/top_elements.md)
+* [Groupby](/report/groupby.md)
+* [Descendants](/report/descendants.md)
 
 
