@@ -5,7 +5,7 @@
 Can use variables to store data in the script
 
 #### Input
-``` javascript
+``` jso'
 {
   "FirstName": "Max",
   "LastName": "Mule",
@@ -14,7 +14,7 @@ Can use variables to store data in the script
 ```
 #### Output
 
-``` javascript
+``` json
 "MuleSoft is awesome"
 ```
 

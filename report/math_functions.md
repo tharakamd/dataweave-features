@@ -5,12 +5,12 @@
 EDataWeave comes with a full set of mathematical equations pre-installed into the language. You can use the random() function to generate a random number between 0 and 1.
 
 #### Input
-``` javascript
+``` json
 {}
 ```
 #### Output
 
-``` javascript
+``` json
 0.19040448181053804
 ```
 

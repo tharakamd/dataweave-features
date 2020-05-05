@@ -71,7 +71,7 @@ payload.accountType.*users map {
 
 #### Input
 
-``` javascript
+``` json
 {
   "accountType": [
     {
@@ -98,7 +98,7 @@ payload.accountType.*users map {
 
 #### Output
 
-``` javascript
+``` json
 [
   {
     "index": 0,

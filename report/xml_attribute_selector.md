@@ -12,7 +12,7 @@ Extract a value from a XML payload
 ```
 #### Output
 
-``` javascript
+``` json
 {
   "item": [
     {

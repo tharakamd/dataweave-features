@@ -5,14 +5,14 @@
 Extract a value from a JSON object
 
 #### Input
-``` javascript
+``` json
 {
 "message": "Hello World!"
 }
 ```
 #### Output
 
-``` javascript
+``` json
 "Hello World!"
 ```
 

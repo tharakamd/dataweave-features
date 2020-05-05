@@ -5,7 +5,7 @@
 Can use functions in the script
 
 #### Input
-``` javascript
+``` json
 {
   "FirstName": "Max",
   "LastName": "Mule",
@@ -14,7 +14,7 @@ Can use functions in the script
 ```
 #### Output
 
-``` javascript
+``` json
 "Match"
 ```
 

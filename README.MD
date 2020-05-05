@@ -22,5 +22,6 @@
 * [Scan](/report/scan.md)
 * [Split by](/report/split_by.md)
 * [XML](/report/xml_attribute_selector.md)
+* [Zip](/report/zip.md)
 
 

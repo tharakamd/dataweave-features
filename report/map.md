@@ -7,7 +7,7 @@ Map is one of the most used functions in DataWeave and helps integration develop
 Let’s take a look at how the map function works on the most basic level by checking out the example below. In order for the map command to work, we must be calling the map function on a data type structured as an array. In the below example, the input is formatted in JSON and the data is wrapped in an array. When the map command is run on the input, we specify that we want a Full Name field instead of a separate FirstName and LastName field. In order to achieve this transformation, we mapped the payload by specifying the desired output format in our DataWeave script.
 
 #### Input
-``` javascript
+``` json
 [
   {
     "FirstName": "Max",
@@ -23,7 +23,7 @@ Let’s take a look at how the map function works on the most basic level by che
 ```
 #### Output
 
-``` javascript
+``` json
 [
   {
     "index": 0,

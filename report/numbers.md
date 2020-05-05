@@ -5,12 +5,12 @@
 The Numbers library enables conversion of numbers into formats such as binary, hex or radix and can be imported into your DataWeave script by including the package in the header of the script. The toHex() function converts a number into hexadecimal, and the fromHex() function converts a hexadecimal number into a decimal number. The toBinary() function transforms a number into Binary, and the fromBinary() function transforms a number from Binary into a decimal number. The toRadixNumber() function transforms a specified radix into a decimal number, and the fromRadixNumber() function transforms a number into a radix. Check out the below demonstration to see these functions working in action.
 
 #### Input
-``` javascript
+``` json
 {}
 ```
 #### Output
 
-``` javascript
+``` json
   "a": "75bcd15",
   "b": "111010110111100110100010101",
   "c": "10",
