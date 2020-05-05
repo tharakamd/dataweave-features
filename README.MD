@@ -20,12 +20,16 @@
 * [Reduce](/report/reduce.md)
 * [Replace](/report/replace.md)
 * [Scan](/report/scan.md)
+* [Zip](/report/zip.md)
 * [Split by](/report/split_by.md)
 * [XML](/report/xml_attribute_selector.md)
 * [XML insert](/report/insert_xml.md)
-* [Zip](/report/zip.md)
 * [Pick Top Elements](/report/top_elements.md)
 * [Groupby](/report/groupby.md)
 * [Descendants](/report/descendants.md)
+* [Dynamic Mapping](/report/dynamic_map.md)
+* [Dates](/report/dates.md)
+* [Date and time operation](/report/date_time.md)
+
 
 
