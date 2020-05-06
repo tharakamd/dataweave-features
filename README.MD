@@ -31,5 +31,12 @@
 * [Dates](/report/dates.md)
 * [Date and time operation](/report/date_time.md)
 
+### Reference
+
+* [Datawave tutorials](https://developer.mulesoft.com/tutorials-and-howtos)
+* [Datawave documentation](https://docs.mulesoft.com/mule-runtime/4.2/dataweave)
+* [Groovy integration guide](https://groovy-lang.org/integrating.html)
+
+
 
 
