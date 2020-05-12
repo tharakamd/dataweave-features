@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/test" name="MainApi" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" url-mapping="/groovy">
+        <inSequence>
+            <script language="groovy"><![CDATA[import groovy.json.*;
+            def payload = mc.getPayloadJSON();
+            def result = payload.withIndex().collect{ item, index ->
+    				[
+            			"index": index,
+            			"Full Name": item.FirstName + " " + item.LastName,
+            			"Company": item.Company
+    				]
+				};
+			mc.setPayloadJSON(JsonOutput.toJson(result));]]></script>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/dm">
+        <inSequence>
+            <datamapper config="gov:datamapper/jsonConverter.dmc"
+                        inputSchema="gov:datamapper/jsonConverter_inputSchema.json" inputType="JSON"
+                        outputSchema="gov:datamapper/jsonConverter_outputSchema.json" outputType="JSON"
+                        xsltStyleSheet="gov:datamapper/jsonConverter_xsltStyleSheet.xml"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/js">
+        <inSequence>
+            <script language="nashornJs"><![CDATA[var payload = mc.getPayloadJSON();
+var result = [];
+for(i=0;i<payload.length;i++){
+	result.push({
+		"index": i,
+		"Full Name": payload[i].FirstName + " " + payload[i].LastName,
+		"Company": payload[i].Company
+
+});
+};
+mc.setPayloadJSON(result);]]></script>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/groovy/xml">
+        <inSequence>
+            <script language="groovy"><![CDATA[import groovy.json.*;
+            def payload = mc.getPayloadXML();
+            def rootNode = new XmlSlurper().parseText(payload);
+            rootNode.employee*.replaceNode{ node ->
+            		employee{
+            		FirstName(node.FirstName.text())
+            		Company(node.Company.text())
+            		}
+				};
+			mc.setPayloadXML(groovy.xml.XmlUtil.serialize(rootNode))]]></script>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/dm/xml">
+        <inSequence>
+            <datamapper config="gov:datamapper/xmltojson.dmc" inputSchema="gov:datamapper/xmltojson_inputSchema.json"
+                        inputType="XML" outputSchema="gov:datamapper/xmltojson_outputSchema.json" outputType="XML"
+                        xsltStyleSheet="gov:datamapper/xmltojson_xsltStyleSheet.xml"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/js/xml">
+        <inSequence>
+            <script language="js"><![CDATA[var payload = mc.getPayloadXML();
+var employees = payload.*::employee;
+
+function abc(){
+            var r = <employees></employees>;
+            for(i=0;i<employees.length();i++){
+            	r.appendChild(<employee><FullName>{employees[i].FirstName + " " + employees[i].LastName}</FullName>{employees[i].Company}</employee>);
+            }
+            	return r;
+            }
+mc.setPayloadXML(abc());]]></script>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/groovy/xml2">
+        <inSequence>
+            <script language="groovy"><![CDATA[import groovy.json.*;
+            def payload = mc.getPayloadXML();
+            def rootNode = new XmlSlurper().parseText(payload);
+            rootNode.employee*.replaceNode{ node ->
+            		FirstName(node.FirstName.text())
+				};
+			mc.setPayloadXML(groovy.xml.XmlUtil.serialize(rootNode))]]></script>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/dm/xml2">
+        <inSequence>
+            <datamapper config="gov:datamapper/xmlconversion2.dmc"
+                        inputSchema="gov:datamapper/xmlconversion2_inputSchema.json" inputType="XML"
+                        outputSchema="gov:datamapper/xmlconversion2_outputSchema.json" outputType="XML"
+                        xsltStyleSheet="gov:datamapper/xmlconversion2_xsltStyleSheet.xml"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/js/xml2">
+        <inSequence>
+            <script language="nashornJs"><![CDATA[var payload = mc.getPayloadXML();
+for(i=0;i<payload.employee.length();i++){
+	
+}]]></script>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

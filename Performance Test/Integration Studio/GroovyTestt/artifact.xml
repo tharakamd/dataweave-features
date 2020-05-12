@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifacts>
+    <artifact name="MainApi" groupId="com.example.GroovyTestt.api" version="1.0.0" type="synapse/api"
+              serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/MainApi.xml</file>
+    </artifact>
+</artifacts>
