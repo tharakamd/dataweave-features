@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm /Library/WSO2/EnterpriseIntegrator/7.0.2/micro-integrator/dropins/class_mediator_1.0.0.jar
+rm /Library/WSO2/EnterpriseIntegrator/7.0.2/micro-integrator/lib/class_mediator.jar
+cp /Users/dilanth/Codes/ClassMediatorTest/target/ClassMediatorTest-1.0-SNAPSHOT.jar  /Library/WSO2/EnterpriseIntegrator/7.0.2/micro-integrator/lib/class_mediator.jar

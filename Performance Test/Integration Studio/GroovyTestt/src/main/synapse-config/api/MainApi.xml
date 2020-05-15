@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <api context="/test" name="MainApi" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="POST" url-mapping="/groovy">
+    <resource methods="POST" url-mapping="/java/json">
+        <inSequence>
+            <class name="com.dilant.mediator.JsonArrayMapperMediator"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/groovy/json">
         <inSequence>
             <script language="groovy"><![CDATA[import groovy.json.*;
             def payload = mc.getPayloadJSON();
@@ -17,7 +25,7 @@
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="POST" url-mapping="/dm">
+    <resource methods="POST" url-mapping="/dm/json">
         <inSequence>
             <datamapper config="gov:datamapper/jsonConverter.dmc"
                         inputSchema="gov:datamapper/jsonConverter_inputSchema.json" inputType="JSON"
@@ -28,7 +36,7 @@
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="POST" url-mapping="/js">
+    <resource methods="POST" url-mapping="/js/json">
         <inSequence>
             <script language="nashornJs"><![CDATA[var payload = mc.getPayloadJSON();
 var result = [];
@@ -46,24 +54,31 @@ mc.setPayloadJSON(result);]]></script>
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="POST" url-mapping="/groovy/xml">
+    <resource methods="POST" url-mapping="/java/xml-mapping">
+        <inSequence>
+            <class name="com.dilant.mediator.XmlArrayMapperMediator"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/groovy/xml-mapping">
         <inSequence>
             <script language="groovy"><![CDATA[import groovy.json.*;
-            def payload = mc.getPayloadXML();
-            def rootNode = new XmlSlurper().parseText(payload);
+            def rootNode = mc.getPayloadXML();
             rootNode.employee*.replaceNode{ node ->
             		employee{
             		FirstName(node.FirstName.text())
             		Company(node.Company.text())
             		}
 				};
-			mc.setPayloadXML(groovy.xml.XmlUtil.serialize(rootNode))]]></script>
+			mc.setPayloadXML(rootNode)]]></script>
             <respond/>
         </inSequence>
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="POST" url-mapping="/dm/xml">
+    <resource methods="POST" url-mapping="/dm/xml-mapping">
         <inSequence>
             <datamapper config="gov:datamapper/xmltojson.dmc" inputSchema="gov:datamapper/xmltojson_inputSchema.json"
                         inputType="XML" outputSchema="gov:datamapper/xmltojson_outputSchema.json" outputType="XML"
@@ -73,39 +88,44 @@ mc.setPayloadJSON(result);]]></script>
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="POST" url-mapping="/js/xml">
+    <resource methods="POST" url-mapping="/js/xml-mappinng">
         <inSequence>
-            <script language="js"><![CDATA[var payload = mc.getPayloadXML();
-var employees = payload.*::employee;
-
-function abc(){
-            var r = <employees></employees>;
-            for(i=0;i<employees.length();i++){
-            	r.appendChild(<employee><FullName>{employees[i].FirstName + " " + employees[i].LastName}</FullName>{employees[i].Company}</employee>);
-            }
-            	return r;
-            }
-mc.setPayloadXML(abc());]]></script>
+            <script language="nashornJs"><![CDATA[var payload = mc.getPayloadXML();
+            var parsedPayload = mc.parseXml(payload.toString());
+var xpath = mc.getXpathResult("//employee");
+var nameList = parsedPayload.getElementsByTagName("employee")[0];
+var result = parsedPayload;
+for(name in nameList){
+	result += nameList[name].toString();
+};
+mc.setPayloadXML("<employees>" + result+ "</employees>");]]></script>
             <respond/>
         </inSequence>
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="POST" url-mapping="/groovy/xml2">
+    <resource methods="POST" url-mapping="/java/xml-array">
+        <inSequence>
+            <class name="com.dilant.mediator.XmlArrayMediator"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/groovy/xml-array">
         <inSequence>
             <script language="groovy"><![CDATA[import groovy.json.*;
-            def payload = mc.getPayloadXML();
-            def rootNode = new XmlSlurper().parseText(payload);
+            def rootNode = mc.getPayloadXML();
             rootNode.employee*.replaceNode{ node ->
             		FirstName(node.FirstName.text())
 				};
-			mc.setPayloadXML(groovy.xml.XmlUtil.serialize(rootNode))]]></script>
+			mc.setPayloadXML(rootNode)]]></script>
             <respond/>
         </inSequence>
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="POST" url-mapping="/dm/xml2">
+    <resource methods="POST" url-mapping="/dm/xml-array">
         <inSequence>
             <datamapper config="gov:datamapper/xmlconversion2.dmc"
                         inputSchema="gov:datamapper/xmlconversion2_inputSchema.json" inputType="XML"
@@ -116,12 +136,16 @@ mc.setPayloadXML(abc());]]></script>
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="POST" url-mapping="/js/xml2">
+    <resource methods="POST" url-mapping="/js/xml-array">
         <inSequence>
             <script language="nashornJs"><![CDATA[var payload = mc.getPayloadXML();
-for(i=0;i<payload.employee.length();i++){
-	
-}]]></script>
+var xpath = mc.getXpathResult("//FirstName");
+var nameList = xpath.selectNodes(payload);
+var result = "";
+for(name in nameList){
+	result += nameList[name];
+};
+mc.setPayloadXML("<employees>" + result + "</employees>");]]></script>
             <respond/>
         </inSequence>
         <outSequence/>
