@@ -39,3 +39,26 @@ payload filterObject ((value, key, index) -> value >= 2)
 ``` groovy
 payload.findAll{it.value >= 2}
 ```
+
+#### Java
+
+```java
+public boolean mediate(MessageContext mc) {
+        String jsonPayload = JsonUtil.jsonPayloadToString(((Axis2MessageContext) mc).getAxis2MessageContext());
+        JsonObject jsonObject = parser.parse(jsonPayload).getAsJsonObject();
+
+        JsonObject result = new JsonObject();
+        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+            if (entry.getValue().getAsInt() >= 2) {
+                result.add(entry.getKey(), entry.getValue());
+            }
+        }
+
+        String transformedJson = result.toString();
+        JsonUtil.newJsonPayload(
+                ((Axis2MessageContext) mc).getAxis2MessageContext(),
+                transformedJson, true, true);
+
+        return true;
+}
+```
