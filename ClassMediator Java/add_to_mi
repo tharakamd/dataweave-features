@@ -1,5 +1,6 @@
 #!/bin/bash
-
-rm /Applications/IntegrationStudio.app/Contents/Eclipse/runtime/microesb/dropins/class_mediator_1.0.0.jar
-rm /Applications/IntegrationStudio.app/Contents/Eclipse/runtime/microesb/lib/class_mediator.jar
-cp /Users/dilanth/Codes/ClassMediatorTest/target/ClassMediatorTest-1.0-SNAPSHOT.jar  /Applications/IntegrationStudio.app/Contents/Eclipse/runtime/microesb/lib/class_mediator.jar
+mi_home='/Applications/IntegrationStudio.app/Contents/Eclipse/runtime/microesb/'
+mvn clean install
+rm "$mi_home"dropins/class_mediator_1.0.0.jar || true
+rm "$mi_home"lib/class_mediator.jar || true
+cp /Users/dilanth/Codes/ClassMediatorTest/target/ClassMediatorTest-1.0-SNAPSHOT.jar  "$mi_home"lib/class_mediator.jar
