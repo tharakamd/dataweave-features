@@ -40,3 +40,25 @@ payload filter ((item, index) -> (item >= 2))
 payload.findAll{it >= 2}
 ```
 
+#### Java
+
+```java
+ public boolean mediate(MessageContext mc) {
+        String jsonPayload = JsonUtil.jsonPayloadToString(((Axis2MessageContext) mc).getAxis2MessageContext());
+        JsonArray jsonArray = parser.parse(jsonPayload).getAsJsonArray();
+
+        JsonArray results = new JsonArray();
+        StreamSupport.stream(jsonArray.spliterator(), false)
+                .map(JsonElement::getAsInt)
+                .filter(item -> item >= 2)
+                .forEach(results::add);
+
+        String transformedJson = results.toString();
+        JsonUtil.newJsonPayload(
+                ((Axis2MessageContext) mc).getAxis2MessageContext(),
+                transformedJson, true, true);
+
+        return true;
+}
+```
+
