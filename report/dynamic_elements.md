@@ -56,3 +56,26 @@ payload.entries[?($."Company" == "MuleSoft")]
 ``` groovy
 payload.entries.findAll{it.Company == "MuleSoft"}
 ```
+
+#### Java
+
+```java
+public boolean mediate(MessageContext mc) {
+        String jsonPayload = JsonUtil.jsonPayloadToString(((Axis2MessageContext) mc).getAxis2MessageContext());
+        JsonObject jsonObject = parser.parse(jsonPayload).getAsJsonObject();
+
+        JsonArray entries = jsonObject.get("entries").getAsJsonArray();
+        JsonArray results = new JsonArray();
+        StreamSupport.stream(entries.spliterator(), false)
+                .map(JsonElement::getAsJsonObject)
+                .filter(obj -> obj.get("Company").getAsString().equals("MuleSoft"))
+                .forEach(results::add);
+
+        String transformedJson = results.toString();
+        JsonUtil.newJsonPayload(
+                ((Axis2MessageContext) mc).getAxis2MessageContext(),
+                transformedJson, true, true);
+
+        return true;
+}
+```
