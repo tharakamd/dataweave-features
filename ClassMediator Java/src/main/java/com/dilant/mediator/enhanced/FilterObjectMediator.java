@@ -1,14 +1,11 @@
 package com.dilant.mediator.enhanced;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
-
-import java.util.Map;
 
 public class FilterObjectMediator extends AbstractMediator {
     private final JsonParser parser;
@@ -23,11 +20,9 @@ public class FilterObjectMediator extends AbstractMediator {
         JsonObject jsonObject = parser.parse(jsonPayload).getAsJsonObject();
 
         JsonObject result = new JsonObject();
-        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-            if (entry.getValue().getAsInt() >= 2) {
-                result.add(entry.getKey(), entry.getValue());
-            }
-        }
+        jsonObject.entrySet().stream()
+                .filter(objectEntry -> objectEntry.getValue().getAsInt() >= 2)
+                .forEach(entry -> result.add(entry.getKey(), entry.getValue()));
 
         String transformedJson = result.toString();
         JsonUtil.newJsonPayload(
