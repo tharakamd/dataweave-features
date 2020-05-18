@@ -41,3 +41,28 @@ def function(arg){
 
 function(payload.Company)
 ```
+#### Java
+
+```java
+public boolean mediate(MessageContext mc) {
+        String jsonPayload = JsonUtil.jsonPayloadToString(((Axis2MessageContext) mc).getAxis2MessageContext());
+        JsonObject jsonObject = parser.parse(jsonPayload).getAsJsonObject();
+
+        String companyName = jsonObject.get("Company").getAsString();
+        String result = function(companyName);
+
+        JsonUtil.newJsonPayload(
+                ((Axis2MessageContext) mc).getAxis2MessageContext(),
+                result, true, true);
+
+        return true;
+    }
+
+    private String function(String arg) {
+        if(arg.equals("MuleSoft")){
+            return "Match";
+        }else {
+            return "No Match";
+        }
+    }
+```
