@@ -34,3 +34,24 @@ payload.Company ++ test
 String test = " is awesome"
 payload.Company + test
 ```
+
+#### Java
+
+```java
+public boolean mediate(MessageContext mc) {
+        String jsonPayload = JsonUtil.jsonPayloadToString(((Axis2MessageContext) mc).getAxis2MessageContext());
+        JsonObject jsonObject = parser.parse(jsonPayload).getAsJsonObject();
+
+        String test = " is awesome";
+        String companyName = jsonObject.get("Company").getAsString();
+
+        String result = companyName + test;
+
+
+        JsonUtil.newJsonPayload(
+                ((Axis2MessageContext) mc).getAxis2MessageContext(),
+                result, true, true);
+
+        return true;
+    }
+```
