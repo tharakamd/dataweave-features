@@ -1,5 +1,7 @@
 package com.dilant.mediator.util;
 
+import com.dilant.mediator.util.collector.JsonElementArrayCollector;
+import com.dilant.mediator.util.collector.JsonElementObjectCollector;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -49,6 +51,14 @@ public class JsonHelper {
         JsonUtil.newJsonPayload(
                 ((Axis2MessageContext) mc).getAxis2MessageContext(),
                 transformedJson, true, true);
+    }
+
+    public static JsonElementArrayCollector toJsonPayloadAsArray(MessageContext mc) {
+        return new JsonElementArrayCollector(mc);
+    }
+
+    public static JsonElementObjectCollector toJsonPayloadAsObject(MessageContext mc) {
+        return new JsonElementObjectCollector(mc);
     }
 
 }

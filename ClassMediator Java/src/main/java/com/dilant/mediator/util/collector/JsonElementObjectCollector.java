@@ -20,7 +20,7 @@ public class JsonElementObjectCollector implements Collector<Map.Entry<String, J
 
     private final MessageContext mc;
 
-    JsonElementObjectCollector(MessageContext mc) {
+    public JsonElementObjectCollector(MessageContext mc) {
         this.mc = mc;
     }
 

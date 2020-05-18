@@ -19,7 +19,7 @@ public class JsonElementArrayCollector implements Collector<JsonElement, JsonArr
 
     private final MessageContext mc;
 
-    JsonElementArrayCollector(MessageContext mc) {
+    public JsonElementArrayCollector(MessageContext mc) {
         this.mc = mc;
     }
 
