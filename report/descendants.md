@@ -49,4 +49,17 @@ output application/json
 { names: payload.people..name }
 ```
 
-#### Groovy Script
+#### Java
+
+```java
+public boolean mediate(MessageContext mc) {
+        try {
+            JsonArray array = JsonHelper.getPayloadJsonElement(mc, "$..name").getAsJsonArray();
+            JsonHelper.setJsonPayload(mc, array);
+        } catch (JaxenException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+}
+```
