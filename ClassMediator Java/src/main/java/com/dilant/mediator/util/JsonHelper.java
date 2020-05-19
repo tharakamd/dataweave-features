@@ -2,13 +2,12 @@ package com.dilant.mediator.util;
 
 import com.dilant.mediator.util.collector.JsonElementArrayCollector;
 import com.dilant.mediator.util.collector.JsonElementObjectCollector;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
+import org.apache.synapse.util.xpath.SynapseJsonPath;
+import org.jaxen.JaxenException;
 
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -18,17 +17,30 @@ import java.util.stream.StreamSupport;
 public class JsonHelper {
 
     private static final JsonParser parser = new JsonParser();
+    private static final Gson gson = new Gson();
 
-
-    public static Stream<JsonElement> getJsonArrayStream(MessageContext mc) {
-        JsonArray jsonArray = getPayloadJsonArray(mc);
-        return StreamSupport.stream(jsonArray.spliterator(), false);
+    public static Stream<JsonElement> getJsonArrayStream(MessageContext mc, String jsonPath) throws JaxenException {
+        JsonElement evaluationResultJson = getPayloadJsonElement(mc, jsonPath);
+        return getJsonArrayStream(evaluationResultJson.getAsJsonArray());
     }
 
     public static Stream<IndexedJsonElement> getJsonArrayStreamWithIndex(MessageContext mc) {
         JsonArray jsonArray = getPayloadJsonArray(mc);
+        return getJsonArrayStreamWithIndex(jsonArray);
+    }
+
+    private static Stream<IndexedJsonElement> getJsonArrayStreamWithIndex(JsonArray jsonArray) {
         return IntStream.range(0, jsonArray.size())
                 .mapToObj(i -> new IndexedJsonElement(i, jsonArray.get(i)));
+    }
+
+    public static Stream<JsonElement> getJsonArrayStream(MessageContext mc) {
+        JsonArray jsonArray = getPayloadJsonArray(mc);
+        return getJsonArrayStream(jsonArray);
+    }
+
+    public static Stream<JsonElement> getJsonArrayStream(JsonArray jsonArray) {
+        return StreamSupport.stream(jsonArray.spliterator(), false);
     }
 
     public static Stream<Map.Entry<String, JsonElement>> getJsonObjectStream(MessageContext mc) {
@@ -42,6 +54,12 @@ public class JsonHelper {
 
     public static JsonObject getPayloadJsonObject(MessageContext mc) {
         return getPayloadJsonElement(mc).getAsJsonObject();
+    }
+
+    public static JsonElement getPayloadJsonElement(MessageContext mc, String jsonPath) throws JaxenException {
+        SynapseJsonPath synapseJsonPath = new SynapseJsonPath(jsonPath);
+        Object evaluationResult = synapseJsonPath.evaluate(mc);
+        return gson.toJsonTree(evaluationResult);
     }
 
     public static JsonElement getPayloadJsonElement(MessageContext mc) {

@@ -62,6 +62,7 @@ payload.withIndex().collect{ item, index ->
     ]
 }
 ```
+#### Java
 
 ```java
 public boolean mediate(MessageContext mc) {

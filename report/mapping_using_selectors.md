@@ -67,6 +67,28 @@ payload.accountType.*users map {
 [accountInfo: payload.accountType.users.flatten()]
 ```
 
+### Java
+
+```java
+    public boolean mediate(MessageContext mc) {
+        try {
+            JsonArray array = JsonHelper.getPayloadJsonElement(mc,"$..users[*]").getAsJsonArray();
+
+            JsonObject obj1 = new JsonObject();
+            obj1.add("accountInfo", array);
+            JsonArray arr1 = new JsonArray();
+            arr1.add(obj1);
+
+            JsonHelper.setJsonPayload(mc, arr1);
+
+        } catch (JaxenException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+```
+
 ## Example 2
 
 #### Input
