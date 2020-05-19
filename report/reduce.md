@@ -33,6 +33,20 @@ payload reduce ($ + $$)
 payload.inject{total, element -> total + element}
 ```
 
+#### Java
+
+```java
+public boolean mediate(MessageContext mc) {
+
+        int sum = JsonHelper.getJsonArrayStream(mc)
+                .map(JsonElement::getAsInt)
+                .reduce(0, Integer::sum);
+
+        JsonHelper.setJsonPayload(mc, String.valueOf(sum));
+        return true;
+}
+```
+
 ## Example 2
 
 #### Input

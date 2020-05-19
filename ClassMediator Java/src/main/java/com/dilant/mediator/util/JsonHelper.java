@@ -19,11 +19,6 @@ public class JsonHelper {
     private static final JsonParser parser = new JsonParser();
     private static final Gson gson = new Gson();
 
-    public static Stream<JsonElement> getJsonArrayStream(MessageContext mc, String jsonPath) throws JaxenException {
-        JsonElement evaluationResultJson = getPayloadJsonElement(mc, jsonPath);
-        return getJsonArrayStream(evaluationResultJson.getAsJsonArray());
-    }
-
     public static Stream<IndexedJsonElement> getJsonArrayStreamWithIndex(MessageContext mc) {
         JsonArray jsonArray = getPayloadJsonArray(mc);
         return getJsonArrayStreamWithIndex(jsonArray);
@@ -32,6 +27,11 @@ public class JsonHelper {
     private static Stream<IndexedJsonElement> getJsonArrayStreamWithIndex(JsonArray jsonArray) {
         return IntStream.range(0, jsonArray.size())
                 .mapToObj(i -> new IndexedJsonElement(i, jsonArray.get(i)));
+    }
+
+    public static Stream<JsonElement> getJsonArrayStream(MessageContext mc, String jsonPath) throws JaxenException {
+        JsonElement evaluationResultJson = getPayloadJsonElement(mc, jsonPath);
+        return getJsonArrayStream(evaluationResultJson.getAsJsonArray());
     }
 
     public static Stream<JsonElement> getJsonArrayStream(MessageContext mc) {
@@ -43,8 +43,27 @@ public class JsonHelper {
         return StreamSupport.stream(jsonArray.spliterator(), false);
     }
 
+    public static Stream<IndexedEntry> getIndexedJsonObjectStream(MessageContext mc, String jsonPath) throws JaxenException {
+        JsonElement evaluationResultJson = getPayloadJsonElement(mc, jsonPath);
+        return getJsonObjectStreamWithIndex(parser.parse(evaluationResultJson.getAsJsonArray().get(0).getAsString()).getAsJsonObject());
+    }
+
+    public static Stream<Map.Entry<String, JsonElement>> getJsonObjectStream(MessageContext mc, String jsonPath) throws JaxenException {
+        JsonElement evaluationResultJson = getPayloadJsonElement(mc, jsonPath);
+        return getJsonObjectStream(parser.parse(evaluationResultJson.getAsJsonArray().get(0).getAsString()).getAsJsonObject());
+    }
+
     public static Stream<Map.Entry<String, JsonElement>> getJsonObjectStream(MessageContext mc) {
         JsonObject jsonObject = getPayloadJsonObject(mc);
+        return getJsonObjectStream(jsonObject);
+    }
+
+    public static Stream<IndexedEntry> getJsonObjectStreamWithIndex(JsonObject jsonObject) {
+        return IntStream.range(0, jsonObject.entrySet().size())
+                .mapToObj(i -> new IndexedEntry(i, jsonObject.entrySet().iterator().next()));
+    }
+
+    public static Stream<Map.Entry<String, JsonElement>> getJsonObjectStream(JsonObject jsonObject) {
         return jsonObject.entrySet().stream();
     }
 
