@@ -33,3 +33,14 @@ output application/json
 "192.88.99.0".split(/\./)
 ```
 
+#### Java
+
+```java
+public boolean mediate(MessageContext mc) {
+
+        String input = "192.88.99.0";
+        return Stream.of(input.split("\\."))
+                .map(JsonPrimitive::new)
+                .collect(JsonHelper.toJsonPayloadAsArray(mc));
+}
+```
