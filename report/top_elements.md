@@ -84,3 +84,27 @@ output application/json
         }.sort{it.rank}[-payload.availablePositions .. -1]
 ]
 ```
+
+#### Java
+
+```java
+public boolean mediate(MessageContext mc) {
+        try {
+
+            JsonObject root = JsonHelper.getPayloadJsonElement(mc).getAsJsonObject();
+            int limit = root.get("availablePositions").getAsInt();
+
+            return JsonHelper.getJsonArrayStream(mc, "$.candidates[*]")
+                    .map(JsonElement::getAsJsonObject)
+                    .sorted(Comparator.comparingInt(o -> o.get("score").getAsInt()))
+                    .limit(limit)
+                    .collect(JsonHelper.toJsonPayloadAsArray(mc));
+
+
+        } catch (JaxenException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+}
+```
