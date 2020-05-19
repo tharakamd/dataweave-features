@@ -80,3 +80,26 @@ payload.accountType[0].collect().withIndex().collect{ element, index ->
 }
 ```
 
+#### Java
+
+```java
+public boolean mediate(MessageContext mc) {
+        try {
+
+            return JsonHelper.getIndexedJsonObjectStream(mc, "$.accountType[0]")
+                    .map(indexedEntry -> {
+                        JsonObject jsonObject = new JsonObject();
+                        jsonObject.add(String.valueOf(indexedEntry.getIndex()), new JsonPrimitive(indexedEntry.getEntry().getKey()));
+                        jsonObject.add("accountInfo", indexedEntry.getEntry().getValue());
+                        return jsonObject;
+                    })
+                    .collect(JsonHelper.toJsonPayloadAsArray(mc));
+
+
+        } catch (JaxenException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+}
+```
