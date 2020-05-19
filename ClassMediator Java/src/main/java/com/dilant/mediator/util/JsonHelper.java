@@ -11,6 +11,7 @@ import org.apache.synapse.commons.json.JsonUtil;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
 
 import java.util.Map;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -22,6 +23,12 @@ public class JsonHelper {
     public static Stream<JsonElement> getJsonArrayStream(MessageContext mc) {
         JsonArray jsonArray = getPayloadJsonArray(mc);
         return StreamSupport.stream(jsonArray.spliterator(), false);
+    }
+
+    public static Stream<IndexedJsonElement> getJsonArrayStreamWithIndex(MessageContext mc) {
+        JsonArray jsonArray = getPayloadJsonArray(mc);
+        return IntStream.range(0, jsonArray.size())
+                .mapToObj(i -> new IndexedJsonElement(i, jsonArray.get(i)));
     }
 
     public static Stream<Map.Entry<String, JsonElement>> getJsonObjectStream(MessageContext mc) {
@@ -48,9 +55,13 @@ public class JsonHelper {
 
     public static void setJsonPayload(MessageContext mc, JsonElement jsonPayload) {
         String transformedJson = jsonPayload.toString();
+        setJsonPayload(mc, transformedJson);
+    }
+
+    public static void setJsonPayload(MessageContext mc, String payload) {
         JsonUtil.newJsonPayload(
                 ((Axis2MessageContext) mc).getAxis2MessageContext(),
-                transformedJson, true, true);
+                payload, true, true);
     }
 
     public static JsonElementArrayCollector toJsonPayloadAsArray(MessageContext mc) {

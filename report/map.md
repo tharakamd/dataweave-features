@@ -62,3 +62,20 @@ payload.withIndex().collect{ item, index ->
     ]
 }
 ```
+
+```java
+public boolean mediate(MessageContext mc) {
+
+        return JsonHelper.getJsonArrayStreamWithIndex(mc)
+                .map(indexedJsonElement -> {
+                    JsonObject currentObject = indexedJsonElement.getElement().getAsJsonObject();
+                    JsonObject object = new JsonObject();
+                    object.add("index", new JsonPrimitive(indexedJsonElement.getIndex()));
+                    object.add("Full Name", new JsonPrimitive(currentObject.get("FirstName").getAsString() + " " + currentObject.get("LastName").getAsString()));
+                    object.add("Company", currentObject.get("Company"));
+                    return object;
+                })
+                .collect(JsonHelper.toJsonPayloadAsArray(mc));
+
+}
+```

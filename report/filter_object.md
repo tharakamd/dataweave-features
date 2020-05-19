@@ -44,21 +44,8 @@ payload.findAll{it.value >= 2}
 
 ```java
 public boolean mediate(MessageContext mc) {
-        String jsonPayload = JsonUtil.jsonPayloadToString(((Axis2MessageContext) mc).getAxis2MessageContext());
-        JsonObject jsonObject = parser.parse(jsonPayload).getAsJsonObject();
-
-        JsonObject result = new JsonObject();
-        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-            if (entry.getValue().getAsInt() >= 2) {
-                result.add(entry.getKey(), entry.getValue());
-            }
-        }
-
-        String transformedJson = result.toString();
-        JsonUtil.newJsonPayload(
-                ((Axis2MessageContext) mc).getAxis2MessageContext(),
-                transformedJson, true, true);
-
-        return true;
+    return JsonHelper.getJsonObjectStream(mc)
+           .filter(objectEntry -> objectEntry.getValue().getAsInt() >= 2)
+           .collect(JsonHelper.toJsonPayloadAsObject(mc));
 }
 ```
