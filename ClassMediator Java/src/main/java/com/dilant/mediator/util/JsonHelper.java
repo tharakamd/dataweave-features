@@ -3,6 +3,7 @@ package com.dilant.mediator.util;
 import com.dilant.mediator.util.collector.JsonElementArrayCollector;
 import com.dilant.mediator.util.collector.JsonElementObjectCollector;
 import com.google.gson.*;
+import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
@@ -95,8 +96,15 @@ public class JsonHelper {
         setJsonPayload(mc, transformedJson);
     }
 
+    // todo :: change this with getNewJsonPayload
     public static void setJsonPayload(MessageContext mc, String payload) {
         JsonUtil.newJsonPayload(
+                ((Axis2MessageContext) mc).getAxis2MessageContext(),
+                payload, true, true);
+    }
+
+    public static void setJsonPayload2(MessageContext mc, String payload) throws AxisFault {
+        JsonUtil.getNewJsonPayload(
                 ((Axis2MessageContext) mc).getAxis2MessageContext(),
                 payload, true, true);
     }
