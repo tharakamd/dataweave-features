@@ -1,6 +1,6 @@
 package com.dilant.mediator.example;
 
-import com.dilant.mediator.util.JsonHelper;
+import com.dilant.mediator.util.PayloadHelper;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
@@ -12,7 +12,7 @@ public class UuidMediator extends AbstractMediator {
     public boolean mediate(MessageContext mc) {
         String uuid = UUID.randomUUID().toString();
 
-        JsonHelper.setJsonPayload(mc, uuid);
+        PayloadHelper.setJsonPayload(mc, uuid);
         return true;
     }
 }

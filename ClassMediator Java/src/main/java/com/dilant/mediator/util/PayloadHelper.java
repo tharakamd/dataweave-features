@@ -3,6 +3,7 @@ package com.dilant.mediator.util;
 import com.dilant.mediator.util.collector.JsonElementArrayCollector;
 import com.dilant.mediator.util.collector.JsonElementObjectCollector;
 import com.google.gson.*;
+import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
@@ -15,10 +16,15 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class JsonHelper {
+public class PayloadHelper {
 
     private static final JsonParser parser = new JsonParser();
     private static final Gson gson = new Gson();
+
+    public static Stream<OMElement> getXmlChildElementsStream(OMElement xmlElement) {
+        Iterable<OMElement> iterable = xmlElement::getChildElements;
+        return StreamSupport.stream(iterable.spliterator(), false);
+    }
 
     public static Stream<IndexedJsonElement> getJsonArrayStreamWithIndex(MessageContext mc) {
         JsonArray jsonArray = getPayloadJsonArray(mc);
@@ -85,6 +91,14 @@ public class JsonHelper {
     public static JsonElement getPayloadJsonElement(MessageContext mc) {
         String jsonPayloadString = getPayloadJsonString(mc);
         return parser.parse(jsonPayloadString);
+    }
+
+    public static void setJsonPayloadToXmlContext(MessageContext mc, JsonObject jsonObject) throws AxisFault {
+        org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) mc).getAxis2MessageContext();
+        axis2MessageContext.setProperty("messageType", "application/json");
+        axis2MessageContext.setProperty("ContentType", "application/json");
+
+        setJsonPayload2(mc, jsonObject.toString());
     }
 
     public static String getPayloadJsonString(MessageContext mc) {

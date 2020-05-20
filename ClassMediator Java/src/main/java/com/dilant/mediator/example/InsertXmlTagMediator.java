@@ -1,18 +1,17 @@
 package com.dilant.mediator.example;
 
+import com.dilant.mediator.util.PayloadHelper;
 import org.apache.axiom.om.OMElement;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
 import javax.xml.namespace.QName;
-import java.util.stream.StreamSupport;
 
 public class InsertXmlTagMediator extends AbstractMediator {
     @Override
     public boolean mediate(MessageContext mc) {
         OMElement rootElement = mc.getEnvelope().getBody().getFirstElement();
-        Iterable<OMElement> iterable = rootElement::getChildElements;
-        StreamSupport.stream(iterable.spliterator(), false)
+        PayloadHelper.getXmlChildElementsStream(rootElement)
                 .forEach(bookElement -> {
                     String year = bookElement.getFirstChildWithName(new QName("year")).getText();
 

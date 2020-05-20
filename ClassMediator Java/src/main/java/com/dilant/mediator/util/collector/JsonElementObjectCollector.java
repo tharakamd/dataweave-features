@@ -1,6 +1,6 @@
 package com.dilant.mediator.util.collector;
 
-import com.dilant.mediator.util.JsonHelper;
+import com.dilant.mediator.util.PayloadHelper;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -48,7 +48,7 @@ public class JsonElementObjectCollector implements Collector<Map.Entry<String, J
     @Override
     public Function<JsonObject, Boolean> finisher() {
         return result -> {
-            JsonHelper.setJsonPayload(mc, result);
+            PayloadHelper.setJsonPayload(mc, result);
             return true;
         };
     }

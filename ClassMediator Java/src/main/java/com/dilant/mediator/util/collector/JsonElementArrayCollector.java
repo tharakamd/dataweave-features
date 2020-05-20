@@ -1,6 +1,6 @@
 package com.dilant.mediator.util.collector;
 
-import com.dilant.mediator.util.JsonHelper;
+import com.dilant.mediator.util.PayloadHelper;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -51,7 +51,7 @@ public class JsonElementArrayCollector implements Collector<JsonElement, JsonArr
     @Override
     public Function<JsonArray, Boolean> finisher() {
         return result -> {
-            JsonHelper.setJsonPayload(mc, result);
+            PayloadHelper.setJsonPayload(mc, result);
             return true;
         };
     }

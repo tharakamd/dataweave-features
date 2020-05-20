@@ -1,6 +1,6 @@
 package com.dilant.mediator.example;
 
-import com.dilant.mediator.util.JsonHelper;
+import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.apache.synapse.MessageContext;
@@ -11,7 +11,7 @@ public class MapMediator extends AbstractMediator {
     @Override
     public boolean mediate(MessageContext mc) {
 
-        return JsonHelper.getJsonArrayStreamWithIndex(mc)
+        return PayloadHelper.getJsonArrayStreamWithIndex(mc)
                 .map(indexedJsonElement -> {
                     JsonObject currentObject = indexedJsonElement.getElement().getAsJsonObject();
                     JsonObject object = new JsonObject();
@@ -20,7 +20,7 @@ public class MapMediator extends AbstractMediator {
                     object.add("Company", currentObject.get("Company"));
                     return object;
                 })
-                .collect(JsonHelper.toJsonPayloadAsArray(mc));
+                .collect(PayloadHelper.toJsonPayloadAsArray(mc));
 
     }
 }

@@ -1,6 +1,6 @@
 package com.dilant.mediator.example;
 
-import com.dilant.mediator.util.JsonHelper;
+import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -41,7 +41,7 @@ public class SelectingXmlMediator extends AbstractMediator {
         axis2MessageContext.setProperty("ContentType", "application/json");
 
         try {
-            JsonHelper.setJsonPayload2(mc, root.toString());
+            PayloadHelper.setJsonPayload2(mc, root.toString());
         } catch (AxisFault axisFault) {
             axisFault.printStackTrace();
         }

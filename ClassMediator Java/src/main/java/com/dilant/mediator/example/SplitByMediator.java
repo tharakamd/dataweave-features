@@ -1,6 +1,6 @@
 package com.dilant.mediator.example;
 
-import com.dilant.mediator.util.JsonHelper;
+import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonPrimitive;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
@@ -15,6 +15,6 @@ public class SplitByMediator extends AbstractMediator {
         String input = "192.88.99.0";
         return Stream.of(input.split("\\."))
                 .map(JsonPrimitive::new)
-                .collect(JsonHelper.toJsonPayloadAsArray(mc));
+                .collect(PayloadHelper.toJsonPayloadAsArray(mc));
     }
 }

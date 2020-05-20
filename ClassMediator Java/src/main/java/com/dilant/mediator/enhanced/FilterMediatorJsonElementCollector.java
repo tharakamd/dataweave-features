@@ -1,6 +1,6 @@
 package com.dilant.mediator.enhanced;
 
-import com.dilant.mediator.util.JsonHelper;
+import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import org.apache.synapse.MessageContext;
@@ -11,11 +11,11 @@ public class FilterMediatorJsonElementCollector extends AbstractMediator {
     @Override
     public boolean mediate(MessageContext mc) {
 
-        return JsonHelper.getJsonArrayStream(mc)
+        return PayloadHelper.getJsonArrayStream(mc)
                 .map(JsonElement::getAsInt)
                 .filter(item -> item >= 2)
                 .map(JsonPrimitive::new)
-                .collect(JsonHelper.toJsonPayloadAsArray(mc));
+                .collect(PayloadHelper.toJsonPayloadAsArray(mc));
 
     }
 }

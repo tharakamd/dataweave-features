@@ -1,6 +1,6 @@
 package com.dilant.mediator.enhanced;
 
-import com.dilant.mediator.util.JsonHelper;
+import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -18,7 +18,7 @@ public class FilterObjectMediatorJsonHelper extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
-        JsonObject jsonObject = JsonHelper.getPayloadJsonObject(mc);
+        JsonObject jsonObject = PayloadHelper.getPayloadJsonObject(mc);
 
         JsonObject result = new JsonObject();
         for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
@@ -27,7 +27,7 @@ public class FilterObjectMediatorJsonHelper extends AbstractMediator {
             }
         }
 
-        JsonHelper.setJsonPayload(mc, result);
+        PayloadHelper.setJsonPayload(mc, result);
 
         return true;
     }
