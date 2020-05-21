@@ -10,8 +10,6 @@ import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
 import javax.xml.namespace.QName;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class RegroupFieldsXmlMediator extends AbstractMediator {
@@ -20,30 +18,28 @@ public class RegroupFieldsXmlMediator extends AbstractMediator {
     public boolean mediate(MessageContext mc) {
         OMElement teachersElement = mc.getEnvelope().getBody().getFirstElement().getFirstChildWithName(new QName("teachers"));
 
-        Map<String, List<OMElement>> subjectMap = PayloadHelper.getXmlChildElementsStream(teachersElement)
-                .collect(Collectors.groupingBy(teacherElement -> teacherElement.getFirstChildWithName(new QName("subject")).getText()));
-
         JsonObject root = new JsonObject();
-
         JsonArray classrooms = new JsonArray();
 
-        subjectMap.forEach((subjectName, teachersElementList) -> {
-            JsonObject classObject = new JsonObject();
-            classObject.add("name", new JsonPrimitive(subjectName));
+        PayloadHelper.getXmlChildElementsStream(teachersElement)
+                .collect(Collectors.groupingBy(teacherElement -> teacherElement.getFirstChildWithName(new QName("subject")).getText()))
+                .forEach((subjectName, teachersElementList) -> {
+                    JsonObject classObject = new JsonObject();
+                    classObject.add("name", new JsonPrimitive(subjectName));
 
-            JsonArray teachersArray = new JsonArray();
-            teachersElementList.forEach(element -> {
-                JsonObject teacherObject = new JsonObject();
-                teacherObject.add("name", new JsonPrimitive(element.getFirstChildWithName(new QName("name")).getText()));
-                teacherObject.add("lastName", new JsonPrimitive(element.getFirstChildWithName(new QName("lastName")).getText()));
-                teachersArray.add(teacherObject);
-            });
+                    JsonArray teachersArray = new JsonArray();
+                    teachersElementList.forEach(element -> {
+                        JsonObject teacherObject = new JsonObject();
+                        teacherObject.add("name", new JsonPrimitive(element.getFirstChildWithName(new QName("name")).getText()));
+                        teacherObject.add("lastName", new JsonPrimitive(element.getFirstChildWithName(new QName("lastName")).getText()));
+                        teachersArray.add(teacherObject);
+                    });
 
-            classObject.add("teachers", teachersArray);
+                    classObject.add("teachers", teachersArray);
 
-            classrooms.add(classObject);
+                    classrooms.add(classObject);
 
-        });
+                });
 
         root.add("classrooms", classrooms);
 
