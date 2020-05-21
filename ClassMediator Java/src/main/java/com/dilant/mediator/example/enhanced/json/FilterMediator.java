@@ -1,4 +1,4 @@
-package com.dilant.mediator.example.enhanced;
+package com.dilant.mediator.example.enhanced.json;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

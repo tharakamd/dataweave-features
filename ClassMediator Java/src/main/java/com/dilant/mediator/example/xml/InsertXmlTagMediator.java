@@ -10,11 +10,10 @@ import javax.xml.namespace.QName;
 public class InsertXmlTagMediator extends AbstractMediator {
     @Override
     public boolean mediate(MessageContext mc) {
-        OMElement rootElement = mc.getEnvelope().getBody().getFirstElement();
-        PayloadHelper.getXmlChildElementsStream(rootElement)
+
+        PayloadHelper.getXmlChildElementsStream(mc)
                 .forEach(bookElement -> {
                     String year = bookElement.getFirstChildWithName(new QName("year")).getText();
-
                     OMElement titleElement = bookElement.getFirstChildWithName(new QName("title"));
                     titleElement.addAttribute("lang", "en", null);
                     titleElement.addAttribute("year", year, null);

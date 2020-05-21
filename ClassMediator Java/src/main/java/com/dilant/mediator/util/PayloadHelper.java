@@ -1,6 +1,8 @@
 package com.dilant.mediator.util;
 
 import com.google.gson.*;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
@@ -9,6 +11,7 @@ import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.util.xpath.SynapseJsonPath;
 import org.jaxen.JaxenException;
 
+import java.io.StringReader;
 import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -20,6 +23,11 @@ public class PayloadHelper {
     private static final Gson gson = new Gson();
 
     private PayloadHelper() {
+    }
+
+    public static Stream<OMElement> getXmlChildElementsStream(MessageContext mc) {
+        OMElement rootElement = mc.getEnvelope().getBody().getFirstElement();
+        return getXmlChildElementsStream(rootElement);
     }
 
     public static Stream<OMElement> getXmlChildElementsStream(OMElement xmlElement) {
@@ -49,6 +57,12 @@ public class PayloadHelper {
 
     public static Stream<JsonElement> getJsonArrayStream(JsonArray jsonArray) {
         return StreamSupport.stream(jsonArray.spliterator(), false);
+    }
+
+    public static Stream<String[]> getCsvArrayStream(MessageContext mc, int linesToSkip) {
+        String csvText = org.apache.synapse.util.PayloadHelper.getTextPayload(mc);
+        CSVReader csvReader = new CSVReaderBuilder(new StringReader(csvText)).withSkipLines(linesToSkip).build();
+        return StreamSupport.stream(csvReader.spliterator(), false);
     }
 
     public static Stream<IndexedEntry> getIndexedJsonObjectStream(MessageContext mc, String jsonPath) throws JaxenException {

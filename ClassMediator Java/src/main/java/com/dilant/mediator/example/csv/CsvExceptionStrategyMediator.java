@@ -1,29 +1,20 @@
 package com.dilant.mediator.example.csv;
 
+import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
 import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
-import org.apache.synapse.util.PayloadHelper;
-
-import java.io.StringReader;
-import java.util.stream.StreamSupport;
 
 public class CsvExceptionStrategyMediator extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
-
-        String text = PayloadHelper.getTextPayload(mc);
-        CSVReader csvReader = new CSVReaderBuilder(new StringReader(text)).withSkipLines(1).build();
-
         JsonArray jsonArray = new JsonArray();
 
-        StreamSupport.stream(csvReader.spliterator(), false)
+        PayloadHelper.getCsvArrayStream(mc, 1)
                 .forEach(row -> {
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.add("orderId", new JsonPrimitive(row[0]));
@@ -34,11 +25,10 @@ public class CsvExceptionStrategyMediator extends AbstractMediator {
                 });
 
         try {
-            com.dilant.mediator.util.PayloadHelper.setJsonPayloadToXmlContext(mc, jsonArray);
+            PayloadHelper.setJsonPayloadToXmlContext(mc, jsonArray);
         } catch (AxisFault axisFault) {
             axisFault.printStackTrace();
         }
-
 
         return true;
     }

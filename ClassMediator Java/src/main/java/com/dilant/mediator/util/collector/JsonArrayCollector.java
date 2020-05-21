@@ -15,11 +15,11 @@ import java.util.stream.Collector;
 
 import static java.util.stream.Collector.Characteristics.UNORDERED;
 
-public class JsonElementArrayCollector implements Collector<JsonElement, JsonArray, Boolean> {
+public class JsonArrayCollector implements Collector<JsonElement, JsonArray, Boolean> {
 
     private final MessageContext mc;
 
-    public JsonElementArrayCollector(MessageContext mc) {
+    JsonArrayCollector(MessageContext mc) {
         this.mc = mc;
     }
 

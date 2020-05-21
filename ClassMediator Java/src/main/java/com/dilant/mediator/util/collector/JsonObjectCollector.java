@@ -16,11 +16,11 @@ import java.util.stream.Collector;
 
 import static java.util.stream.Collector.Characteristics.UNORDERED;
 
-public class JsonElementObjectCollector implements Collector<Map.Entry<String, JsonElement>, JsonObject, Boolean> {
+public class JsonObjectCollector implements Collector<Map.Entry<String, JsonElement>, JsonObject, Boolean> {
 
     private final MessageContext mc;
 
-    public JsonElementObjectCollector(MessageContext mc) {
+    JsonObjectCollector(MessageContext mc) {
         this.mc = mc;
     }
 

@@ -1,11 +1,11 @@
-package com.dilant.mediator.example.csv;
+package com.dilant.mediator.example.enhanced.csv;
 
 import com.dilant.mediator.util.PayloadHelper;
 import com.dilant.mediator.util.collector.PayloadCollectors;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
-public class CsvFilterMediator extends AbstractMediator {
+public class CsvFilterMediatorEnhanced extends AbstractMediator {
     @Override
     public boolean mediate(MessageContext mc) {
 

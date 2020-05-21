@@ -1,7 +1,7 @@
 package com.dilant.mediator.example.json;
 
-import com.dilant.mediator.util.PayloadCollectors;
 import com.dilant.mediator.util.PayloadHelper;
+import com.dilant.mediator.util.collector.PayloadCollectors;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.apache.synapse.MessageContext;
