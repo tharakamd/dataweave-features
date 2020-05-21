@@ -21,6 +21,9 @@ public class PayloadHelper {
     private static final JsonParser parser = new JsonParser();
     private static final Gson gson = new Gson();
 
+    private PayloadHelper() {
+    }
+
     public static Stream<OMElement> getXmlChildElementsStream(OMElement xmlElement) {
         Iterable<OMElement> iterable = xmlElement::getChildElements;
         return StreamSupport.stream(iterable.spliterator(), false);
@@ -93,12 +96,12 @@ public class PayloadHelper {
         return parser.parse(jsonPayloadString);
     }
 
-    public static void setJsonPayloadToXmlContext(MessageContext mc, JsonObject jsonObject) throws AxisFault {
+    public static void setJsonPayloadToXmlContext(MessageContext mc, JsonElement jsonElement) throws AxisFault {
         org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) mc).getAxis2MessageContext();
         axis2MessageContext.setProperty("messageType", "application/json");
         axis2MessageContext.setProperty("ContentType", "application/json");
 
-        setJsonPayload2(mc, jsonObject.toString());
+        setJsonPayload2(mc, jsonElement.toString());
     }
 
     public static String getPayloadJsonString(MessageContext mc) {
