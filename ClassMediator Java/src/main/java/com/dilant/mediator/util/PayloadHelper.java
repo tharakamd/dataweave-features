@@ -1,7 +1,5 @@
 package com.dilant.mediator.util;
 
-import com.dilant.mediator.util.collector.JsonElementArrayCollector;
-import com.dilant.mediator.util.collector.JsonElementObjectCollector;
 import com.google.gson.*;
 import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
@@ -124,14 +122,6 @@ public class PayloadHelper {
         JsonUtil.getNewJsonPayload(
                 ((Axis2MessageContext) mc).getAxis2MessageContext(),
                 payload, true, true);
-    }
-
-    public static JsonElementArrayCollector toJsonPayloadAsArray(MessageContext mc) {
-        return new JsonElementArrayCollector(mc);
-    }
-
-    public static JsonElementObjectCollector toJsonPayloadAsObject(MessageContext mc) {
-        return new JsonElementObjectCollector(mc);
     }
 
 }

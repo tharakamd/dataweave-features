@@ -2,7 +2,7 @@
 <api context="/test" name="MainApi" xmlns="http://ws.apache.org/ns/synapse">
     <resource methods="POST" url-mapping="/java/json">
         <inSequence>
-            <class name="com.dilant.mediator.JsonArrayMapperMediator"/>
+            <class name="com.dilant.mediator.example.json.JsonArrayMapperMediator"/>
             <respond/>
         </inSequence>
         <outSequence/>
@@ -56,7 +56,7 @@ mc.setPayloadJSON(result);]]></script>
     </resource>
     <resource methods="POST" url-mapping="/java/xml-mapping">
         <inSequence>
-            <class name="com.dilant.mediator.XmlArrayMapperMediator"/>
+            <class name="com.dilant.mediator.example.xml.XmlArrayMapperMediator"/>
             <respond/>
         </inSequence>
         <outSequence/>
@@ -106,7 +106,7 @@ mc.setPayloadXML("<employees>" + result+ "</employees>");]]></script>
     </resource>
     <resource methods="POST" url-mapping="/java/xml-array">
         <inSequence>
-            <class name="com.dilant.mediator.XmlArrayMediator"/>
+            <class name="com.dilant.mediator.example.xml.XmlArrayMediator"/>
             <respond/>
         </inSequence>
         <outSequence/>
