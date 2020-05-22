@@ -14,6 +14,7 @@ public class CsvSendingThroughEmailMediator extends AbstractMediator {
     public boolean mediate(MessageContext mc) {
 
         JsonArray jsonArray = new JsonArray();
+
         PayloadHelper.getCsvArrayStream(mc, 1)
                 .forEach(row -> {
                     JsonObject jsonObject = new JsonObject();

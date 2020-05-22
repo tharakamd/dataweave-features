@@ -31,63 +31,6 @@ orderId,name,units,pricePerUnit
 
 https://github.com/wso2/integration-studio-examples/tree/master/migration/mule/sending-a-csv-through-email-using-smtp
 
-
-## Legacy Modernization
-
-#### Input
-``` xml
-<ord:putShippingOrder>
-         <shippingId>1234</shippingId>
-         <billingAddress>
-            <name>WSO2</name>
-            <line1>100 Geary St</line1>
-            <line2>Level 4</line2>
-            <city>San Francisco</city>
-            <stateOrProvinceCode>CA</stateOrProvinceCode>
-            <countryCode>USA</countryCode>
-            <postalCode>94108</postalCode>
-         </billingAddress>
-         <shippingAddress>
-            <name>WSO2</name>
-            <line1>100 Geary St</line1>
-            <line2>Level 4</line2>
-            <city>San Francisco</city>
-            <stateOrProvinceCode>CA</stateOrProvinceCode>
-            <countryCode>USA</countryCode>
-            <postalCode>94108</postalCode>
-         </shippingAddress>
-         <order>
-            <orderItem>
-               <merchantSKU>1234</merchantSKU>
-               <quantity>500</quantity>
-               <price>1.99</price>
-            </orderItem>
-            <orderItem>
-               <merchantSKU>6789</merchantSKU>
-               <quantity>1500</quantity>
-               <price>9.59</price>
-            </orderItem>
-            <orderItem>
-               <merchantSKU>9998</merchantSKU>
-               <quantity>5000</quantity>
-               <price>3.00</price>
-            </orderItem>
-         </order>
-</ord:putShippingOrder>
-```
-
-#### Output
-
-``` csv
-1234.0,500.0,1.99,WSO2,100 Geary St Level 4,San Francisco,CA,USA,94108.0,WSO2,100 Geary St Level 4,San Francisco,CA,USA,94108.0,1234.0
-6789.0,1500.0,9.59,WSO2,100 Geary St Level 4,San Francisco,CA,USA,94108.0,WSO2,100 Geary St Level 4,San Francisco,CA,USA,94108.0,1234.0
-9998.0,5000.0,3.00,WSO2,100 Geary St Level 4,San Francisco,CA,USA,94108.0,WSO2,100 Geary St Level 4,San Francisco,CA,USA,94108.0,1234.0
-
-```
-
-https://github.com/wso2/integration-studio-examples/tree/master/migration/mule/legacy-modernization
-
-
 ## Implementing an Exception Strategy
 
 #### Input

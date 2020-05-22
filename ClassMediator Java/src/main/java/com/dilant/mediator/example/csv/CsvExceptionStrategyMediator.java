@@ -6,12 +6,16 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
+import org.apache.synapse.SynapseLog;
 import org.apache.synapse.mediators.AbstractMediator;
 
 public class CsvExceptionStrategyMediator extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
+
+        SynapseLog logger = getLog(mc);
+
         JsonArray jsonArray = new JsonArray();
 
         PayloadHelper.getCsvArrayStream(mc, 1)
@@ -27,7 +31,8 @@ public class CsvExceptionStrategyMediator extends AbstractMediator {
         try {
             PayloadHelper.setJsonPayloadToXmlContext(mc, jsonArray);
         } catch (AxisFault axisFault) {
-            axisFault.printStackTrace();
+            logger.error(axisFault);
+            return false;
         }
 
         return true;
