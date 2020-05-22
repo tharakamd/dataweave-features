@@ -3,6 +3,7 @@ package com.dilant.mediator.example.json;
 import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 import org.jaxen.JaxenException;
@@ -21,8 +22,9 @@ public class MappingUsingSelectorsMediator extends AbstractMediator {
 
             PayloadHelper.setJsonPayload(mc, arr1);
 
-        } catch (JaxenException e) {
-            e.printStackTrace();
+        } catch (JaxenException | AxisFault e) {
+            getLog(mc).error(e);
+            return false;
         }
 
         return true;

@@ -7,7 +7,6 @@ import com.google.gson.JsonPrimitive;
 import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
-import org.apache.synapse.core.axis2.Axis2MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
 import javax.xml.namespace.QName;
@@ -37,14 +36,11 @@ public class SelectingXmlMediator extends AbstractMediator {
         JsonObject root = new JsonObject();
         root.add("item", items);
 
-        org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) mc).getAxis2MessageContext();
-        axis2MessageContext.setProperty("messageType", "application/json");
-        axis2MessageContext.setProperty("ContentType", "application/json");
-
         try {
-            PayloadHelper.setJsonPayload2(mc, root.toString());
+            PayloadHelper.setJsonPayload(mc, root.toString());
         } catch (AxisFault axisFault) {
-            axisFault.printStackTrace();
+            getLog(mc).error(axisFault);
+            return false;
         }
 
         return true;

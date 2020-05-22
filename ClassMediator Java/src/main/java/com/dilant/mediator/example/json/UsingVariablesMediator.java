@@ -2,17 +2,12 @@ package com.dilant.mediator.example.json;
 
 import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
 public class UsingVariablesMediator extends AbstractMediator {
-
-    private final JsonParser parser;
-
-    public UsingVariablesMediator() {
-        parser = new JsonParser();
-    }
 
     @Override
     public boolean mediate(MessageContext mc) {
@@ -22,7 +17,12 @@ public class UsingVariablesMediator extends AbstractMediator {
         String companyName = jsonObject.get("Company").getAsString();
         String result = companyName + test;
 
-        PayloadHelper.setJsonPayload(mc, result);
+        try {
+            PayloadHelper.setJsonPayload(mc, new JsonPrimitive(result));
+        } catch (AxisFault axisFault) {
+            getLog(mc).error(axisFault);
+            return false;
+        }
         return true;
     }
 }

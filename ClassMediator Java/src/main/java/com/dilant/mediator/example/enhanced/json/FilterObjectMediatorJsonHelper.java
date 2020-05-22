@@ -22,18 +22,13 @@ package com.dilant.mediator.example.enhanced.json;
 import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
 import java.util.Map;
 
 public class FilterObjectMediatorJsonHelper extends AbstractMediator {
-    private final JsonParser parser;
-
-    public FilterObjectMediatorJsonHelper() {
-        parser = new JsonParser();
-    }
 
     @Override
     public boolean mediate(MessageContext mc) {
@@ -46,7 +41,12 @@ public class FilterObjectMediatorJsonHelper extends AbstractMediator {
             }
         }
 
-        PayloadHelper.setJsonPayload(mc, result);
+        try {
+            PayloadHelper.setJsonPayload(mc, result);
+        } catch (AxisFault axisFault) {
+            getLog(mc).error(axisFault);
+            return false;
+        }
 
         return true;
     }

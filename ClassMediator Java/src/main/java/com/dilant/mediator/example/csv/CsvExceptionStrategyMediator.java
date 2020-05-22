@@ -29,7 +29,7 @@ public class CsvExceptionStrategyMediator extends AbstractMediator {
                 });
 
         try {
-            PayloadHelper.setJsonPayloadToXmlContext(mc, jsonArray);
+            PayloadHelper.setJsonPayload(mc, jsonArray);
         } catch (AxisFault axisFault) {
             logger.error(axisFault);
             return false;

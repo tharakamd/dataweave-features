@@ -27,9 +27,10 @@ public class CsvSendingThroughEmailMediator extends AbstractMediator {
                 });
 
         try {
-            PayloadHelper.setJsonPayloadToXmlContext(mc, jsonArray);
+            PayloadHelper.setJsonPayload(mc, jsonArray);
         } catch (AxisFault axisFault) {
-            axisFault.printStackTrace();
+            getLog(mc).error(axisFault);
+            return false;
         }
 
 

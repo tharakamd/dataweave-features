@@ -22,6 +22,7 @@ package com.dilant.mediator.example.enhanced.json;
 import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
@@ -37,7 +38,12 @@ public class FilterMediatorJsonHelper extends AbstractMediator {
                 .filter(item -> item >= 2)
                 .forEach(results::add);
 
-        PayloadHelper.setJsonPayload(mc, results);
+        try {
+            PayloadHelper.setJsonPayload(mc, results);
+        } catch (AxisFault axisFault) {
+            getLog(mc).error(axisFault);
+            return false;
+        }
 
         return true;
     }

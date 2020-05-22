@@ -7,7 +7,7 @@ Now let’s move on to a more complicated map example using selectors. In the de
 To achieve this transformation, we start off by defining that we want to map the payload.accountType array. We then use a multi-selector, signified by *users, which is used to run the map command on entries matching with the name users. In DataWeave, you can represent the index count by using a double dollar sign $$ and can represent the element with a single dollar sign $. In this example, we use the single dollar sign to list out the elements in each object.
 
 #### Input
-``` javascript
+``` json
 {
   "accountType": [
     {
@@ -33,7 +33,7 @@ To achieve this transformation, we start off by defining that we want to map the
 ```
 #### Output
 
-``` javascript
+``` json
 [
   {
     "accountInfo": [

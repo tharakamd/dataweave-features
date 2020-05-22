@@ -4,6 +4,7 @@ import com.dilant.mediator.util.PayloadHelper;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 
 import java.util.Set;
@@ -51,7 +52,11 @@ public class JsonArrayCollector implements Collector<JsonElement, JsonArray, Boo
     @Override
     public Function<JsonArray, Boolean> finisher() {
         return result -> {
-            PayloadHelper.setJsonPayload(mc, result);
+            try {
+                PayloadHelper.setJsonPayload(mc, result);
+            } catch (AxisFault axisFault) {
+                return false;
+            }
             return true;
         };
     }

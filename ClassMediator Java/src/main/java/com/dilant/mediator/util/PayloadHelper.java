@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.xpath.AXIOMXPath;
 import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
@@ -12,6 +13,7 @@ import org.apache.synapse.util.xpath.SynapseJsonPath;
 import org.jaxen.JaxenException;
 
 import java.io.StringReader;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -23,6 +25,12 @@ public class PayloadHelper {
     private static final Gson gson = new Gson();
 
     private PayloadHelper() {
+    }
+
+    public static Stream<OMElement> getXmlElementsStream(OMElement baseElement, String xPath) throws JaxenException {
+        AXIOMXPath axiomxPath = new AXIOMXPath(xPath);
+        List<OMElement> elementList = axiomxPath.selectNodes(baseElement);
+        return elementList.stream();
     }
 
     public static Stream<OMElement> getXmlChildElementsStream(MessageContext mc) {
@@ -108,31 +116,21 @@ public class PayloadHelper {
         return parser.parse(jsonPayloadString);
     }
 
-    public static void setJsonPayloadToXmlContext(MessageContext mc, JsonElement jsonElement) throws AxisFault {
-        org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) mc).getAxis2MessageContext();
-        axis2MessageContext.setProperty("messageType", "application/json");
-        axis2MessageContext.setProperty("ContentType", "application/json");
-
-        setJsonPayload2(mc, jsonElement.toString());
-    }
-
     public static String getPayloadJsonString(MessageContext mc) {
         return JsonUtil.jsonPayloadToString(((Axis2MessageContext) mc).getAxis2MessageContext());
     }
 
-    public static void setJsonPayload(MessageContext mc, JsonElement jsonPayload) {
+    public static void setJsonPayload(MessageContext mc, JsonElement jsonPayload) throws AxisFault {
         String transformedJson = jsonPayload.toString();
         setJsonPayload(mc, transformedJson);
     }
 
-    // todo :: change this with getNewJsonPayload
-    public static void setJsonPayload(MessageContext mc, String payload) {
-        JsonUtil.newJsonPayload(
-                ((Axis2MessageContext) mc).getAxis2MessageContext(),
-                payload, true, true);
-    }
 
-    public static void setJsonPayload2(MessageContext mc, String payload) throws AxisFault {
+    public static void setJsonPayload(MessageContext mc, String payload) throws AxisFault {
+        org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) mc).getAxis2MessageContext();
+        axis2MessageContext.setProperty("messageType", "application/json");
+        axis2MessageContext.setProperty("ContentType", "application/json");
+
         JsonUtil.getNewJsonPayload(
                 ((Axis2MessageContext) mc).getAxis2MessageContext(),
                 payload, true, true);

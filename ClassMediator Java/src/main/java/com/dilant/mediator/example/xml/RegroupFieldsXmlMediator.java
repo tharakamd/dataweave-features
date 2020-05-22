@@ -44,9 +44,10 @@ public class RegroupFieldsXmlMediator extends AbstractMediator {
         root.add("classrooms", classrooms);
 
         try {
-            PayloadHelper.setJsonPayloadToXmlContext(mc, root);
+            PayloadHelper.setJsonPayload(mc, root);
         } catch (AxisFault axisFault) {
-            axisFault.printStackTrace();
+            getLog(mc).error(axisFault);
+            return false;
         }
 
         return true;

@@ -32,9 +32,10 @@ public class CsvMongoDbMediator extends AbstractMediator {
         rootObject.add("customerdetails", customerDetails);
 
         try {
-            PayloadHelper.setJsonPayloadToXmlContext(mc, rootObject);
+            PayloadHelper.setJsonPayload(mc, rootObject);
         } catch (AxisFault axisFault) {
-            axisFault.printStackTrace();
+            getLog(mc).error(axisFault);
+            return false;
         }
 
 
