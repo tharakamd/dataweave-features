@@ -19,25 +19,8 @@
 
 package com.dilant.mediator.util.extender;
 
-import org.apache.synapse.MessageContext;
-import org.apache.synapse.mediators.AbstractMediator;
-
-public abstract class AbstractExtendedMediator extends AbstractMediator {
-
-    protected AbstractExtendedMediator() {
-        super();
+public class MCException extends RuntimeException {
+    public MCException(Throwable cause) {
+        super(cause);
     }
-
-    @Override
-    public boolean mediate(MessageContext messageContext) {
-        try {
-            mediate(new ExtendedMessageContext(messageContext));
-            return true;
-        } catch (MCException e) {
-            getLog(messageContext).error(e);
-            return false;
-        }
-    }
-
-    public abstract void mediate(ExtendedMessageContext messageContext);
 }

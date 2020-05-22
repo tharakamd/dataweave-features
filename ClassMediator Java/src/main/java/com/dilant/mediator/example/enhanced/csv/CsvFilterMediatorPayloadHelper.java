@@ -5,7 +5,7 @@ import com.dilant.mediator.util.collector.PayloadCollectors;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
-public class CsvFilterMediatorEnhanced extends AbstractMediator {
+public class CsvFilterMediatorPayloadHelper extends AbstractMediator {
     @Override
     public boolean mediate(MessageContext mc) {
 

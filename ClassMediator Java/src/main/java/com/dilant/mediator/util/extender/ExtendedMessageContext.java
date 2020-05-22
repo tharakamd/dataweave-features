@@ -22,27 +22,55 @@ package com.dilant.mediator.util.extender;
 import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
+import org.apache.synapse.commons.json.JsonUtil;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
 
+import java.io.StringReader;
 import java.util.Map;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class ExtendedMessageContext extends Axis2MessageContext {
 
-    private final MessageContext messageContext;
-
     public ExtendedMessageContext(MessageContext axisMsgCtx) {
         super(((Axis2MessageContext) axisMsgCtx).getAxis2MessageContext(), axisMsgCtx.getConfiguration(), axisMsgCtx.getEnvironment());
-        messageContext = axisMsgCtx;
     }
 
     public Stream<JsonElement> getJsonArrayStream() {
-        return PayloadHelper.getJsonArrayStream(messageContext);
+        return PayloadHelper.getJsonArrayStream(this);
     }
 
     public Stream<Map.Entry<String, JsonElement>> getJsonObjectStream() {
         JsonObject jsonObject = PayloadHelper.getPayloadJsonObject(this);
         return PayloadHelper.getJsonObjectStream(jsonObject);
+    }
+
+    public Stream<String[]> getCsvArrayStream(int linesToSkip) {
+        String csvText = org.apache.synapse.util.PayloadHelper.getTextPayload(this);
+        CSVReader csvReader = new CSVReaderBuilder(new StringReader(csvText)).withSkipLines(linesToSkip).build();
+        return StreamSupport.stream(csvReader.spliterator(), false);
+    }
+
+    public void setJsonPayload(JsonElement jsonPayload) {
+        String transformedJson = jsonPayload.toString();
+        setJsonPayload(transformedJson);
+    }
+
+    public void setJsonPayload(String payload) {
+
+        org.apache.axis2.context.MessageContext axis2MessageContext = this.getAxis2MessageContext();
+        axis2MessageContext.setProperty("messageType", "application/json");
+        axis2MessageContext.setProperty("ContentType", "application/json");
+
+        try {
+            JsonUtil.getNewJsonPayload(this.getAxis2MessageContext(),
+                    payload, true, true);
+        } catch (AxisFault axisFault) {
+            throw new MCException(axisFault);
+        }
     }
 }
