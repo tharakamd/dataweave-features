@@ -22,16 +22,14 @@ package com.dilant.mediator.example.enhanced.json;
 import com.dilant.mediator.util.collector.PayloadCollectors;
 import com.dilant.mediator.util.extender.AbstractExtendedMediator;
 import com.dilant.mediator.util.extender.ExtendedMessageContext;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
 
-public class FilterMediatorExtendedMD extends AbstractExtendedMediator {
+public class FilterObjectMediatorExtendedMD extends AbstractExtendedMediator {
+
     @Override
     public void mediate(ExtendedMessageContext mc) {
-        mc.getJsonArrayStream()
-                .map(JsonElement::getAsInt)
-                .filter(item -> item >= 2)
-                .map(JsonPrimitive::new)
-                .collect(PayloadCollectors.toJsonArray(mc));
+        mc.getJsonObjectStream()
+                .filter(objectEntry -> objectEntry.getValue().getAsInt() >= 2)
+                .collect(PayloadCollectors.toJsonObject(mc));
     }
+
 }

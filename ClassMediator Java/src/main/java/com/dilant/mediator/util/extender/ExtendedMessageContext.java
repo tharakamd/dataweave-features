@@ -21,9 +21,11 @@ package com.dilant.mediator.util.extender;
 
 import com.dilant.mediator.util.PayloadHelper;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
 
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class ExtendedMessageContext extends Axis2MessageContext {
@@ -37,5 +39,10 @@ public class ExtendedMessageContext extends Axis2MessageContext {
 
     public Stream<JsonElement> getJsonArrayStream() {
         return PayloadHelper.getJsonArrayStream(messageContext);
+    }
+
+    public Stream<Map.Entry<String, JsonElement>> getJsonObjectStream() {
+        JsonObject jsonObject = PayloadHelper.getPayloadJsonObject(this);
+        return PayloadHelper.getJsonObjectStream(jsonObject);
     }
 }
