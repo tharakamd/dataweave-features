@@ -13,11 +13,13 @@ public class XmlArrayMapperMediator extends AbstractMediator {
     private final OMFactory factory;
 
     public XmlArrayMapperMediator() {
+
         factory = OMAbstractFactory.getOMFactory();
     }
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         OMElement rootElement = mc.getEnvelope().getBody().getFirstElement();
         Iterator<OMElement> iterator = rootElement.getChildElements();
 

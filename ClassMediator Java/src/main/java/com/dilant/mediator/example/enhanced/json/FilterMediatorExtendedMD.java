@@ -26,8 +26,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 
 public class FilterMediatorExtendedMD extends AbstractExtendedMediator {
+
     @Override
     public void mediate(SimpleMessageContext mc) {
+
         mc.getJsonArrayStream()
                 .map(JsonElement::getAsInt)
                 .filter(item -> item >= 2)

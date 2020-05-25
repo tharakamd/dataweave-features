@@ -25,11 +25,13 @@ import org.apache.synapse.mediators.AbstractMediator;
 public abstract class AbstractExtendedMediator extends AbstractMediator {
 
     protected AbstractExtendedMediator() {
+
         super();
     }
 
     @Override
     public final boolean mediate(MessageContext messageContext) {
+
         try {
             mediate(new SimpleMessageContext(messageContext));
             return true;

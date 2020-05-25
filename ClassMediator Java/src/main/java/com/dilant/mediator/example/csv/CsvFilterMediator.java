@@ -6,6 +6,7 @@ import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
 public class CsvFilterMediator extends AbstractMediator {
+
     @Override
     public boolean mediate(MessageContext mc) {
 

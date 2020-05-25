@@ -13,6 +13,7 @@ import java.io.StringWriter;
 import java.util.stream.StreamSupport;
 
 public class CsvFilterMediator extends AbstractMediator {
+
     @Override
     public boolean mediate(MessageContext mc) {
 
@@ -36,7 +37,6 @@ public class CsvFilterMediator extends AbstractMediator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         return true;
     }

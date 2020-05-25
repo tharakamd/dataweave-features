@@ -12,17 +12,18 @@ public class PluckMediator extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         try {
 
             return PayloadHelper.getIndexedJsonObjectStream(mc, "$.accountType[0]")
                     .map(indexedEntry -> {
                         JsonObject jsonObject = new JsonObject();
-                        jsonObject.add(String.valueOf(indexedEntry.getIndex()), new JsonPrimitive(indexedEntry.getEntry().getKey()));
+                        jsonObject.add(String.valueOf(indexedEntry.getIndex()),
+                                new JsonPrimitive(indexedEntry.getEntry().getKey()));
                         jsonObject.add("accountInfo", indexedEntry.getEntry().getValue());
                         return jsonObject;
                     })
                     .collect(PayloadCollectors.toJsonArray(mc));
-
 
         } catch (JaxenException e) {
             e.printStackTrace();

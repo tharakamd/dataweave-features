@@ -9,20 +9,24 @@ import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
 
-import javax.xml.namespace.QName;
 import java.util.stream.Collectors;
+
+import javax.xml.namespace.QName;
 
 public class RegroupFieldsXmlMediator extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
-        OMElement teachersElement = mc.getEnvelope().getBody().getFirstElement().getFirstChildWithName(new QName("teachers"));
+
+        OMElement teachersElement =
+                mc.getEnvelope().getBody().getFirstElement().getFirstChildWithName(new QName("teachers"));
 
         JsonObject root = new JsonObject();
         JsonArray classrooms = new JsonArray();
 
         PayloadHelper.getXmlChildElementsStream(teachersElement)
-                .collect(Collectors.groupingBy(teacherElement -> teacherElement.getFirstChildWithName(new QName("subject")).getText()))
+                .collect(Collectors.groupingBy(
+                        teacherElement -> teacherElement.getFirstChildWithName(new QName("subject")).getText()))
                 .forEach((subjectName, teachersElementList) -> {
                     JsonObject classObject = new JsonObject();
                     classObject.add("name", new JsonPrimitive(subjectName));
@@ -30,8 +34,10 @@ public class RegroupFieldsXmlMediator extends AbstractMediator {
                     JsonArray teachersArray = new JsonArray();
                     teachersElementList.forEach(element -> {
                         JsonObject teacherObject = new JsonObject();
-                        teacherObject.add("name", new JsonPrimitive(element.getFirstChildWithName(new QName("name")).getText()));
-                        teacherObject.add("lastName", new JsonPrimitive(element.getFirstChildWithName(new QName("lastName")).getText()));
+                        teacherObject.add("name",
+                                new JsonPrimitive(element.getFirstChildWithName(new QName("name")).getText()));
+                        teacherObject.add("lastName",
+                                new JsonPrimitive(element.getFirstChildWithName(new QName("lastName")).getText()));
                         teachersArray.add(teacherObject);
                     });
 

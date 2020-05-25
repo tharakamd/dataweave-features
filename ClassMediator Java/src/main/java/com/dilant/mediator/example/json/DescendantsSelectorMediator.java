@@ -11,6 +11,7 @@ public class DescendantsSelectorMediator extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         try {
             JsonArray array = PayloadHelper.getPayloadJsonElement(mc, "$..name").getAsJsonArray();
             PayloadHelper.setJsonPayload(mc, array);

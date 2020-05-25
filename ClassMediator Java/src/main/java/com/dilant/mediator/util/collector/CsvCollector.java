@@ -38,33 +38,41 @@ import java.util.stream.Collector;
 
 import static java.util.stream.Collector.Characteristics.UNORDERED;
 
+/**
+ * Collector to collect a Stream of String array to a Text payload and set the payload content
+ */
 public class CsvCollector implements Collector<String[], List<String[]>, Boolean> {
 
     private final MessageContext mc;
     private final SimpleMessageContext simpleMessageContext;
 
     CsvCollector(MessageContext mc) {
+
         this.mc = mc;
         this.simpleMessageContext = null;
     }
 
     public CsvCollector(SimpleMessageContext simpleMessageContext) {
+
         this.simpleMessageContext = simpleMessageContext;
         this.mc = null;
     }
 
     @Override
     public Supplier<List<String[]>> supplier() {
+
         return ArrayList::new;
     }
 
     @Override
     public BiConsumer<List<String[]>, String[]> accumulator() {
+
         return List::add;
     }
 
     @Override
     public BinaryOperator<List<String[]>> combiner() {
+
         return (list1, list2) -> {
             list1.addAll(list2);
             return list1;
@@ -73,6 +81,7 @@ public class CsvCollector implements Collector<String[], List<String[]>, Boolean
 
     @Override
     public Function<List<String[]>, Boolean> finisher() {
+
         return rowList -> {
             StringWriter stringWriter = new StringWriter();
             CSVWriter csvWriter = new CSVWriter(stringWriter,
@@ -93,7 +102,7 @@ public class CsvCollector implements Collector<String[], List<String[]>, Boolean
                 }
 
             } catch (IOException e) {
-                e.printStackTrace();
+                e.printStackTrace(); // todo:: replace with a logger
                 return false;
             }
 
@@ -104,6 +113,7 @@ public class CsvCollector implements Collector<String[], List<String[]>, Boolean
 
     @Override
     public Set<Characteristics> characteristics() {
+
         return Sets.immutableEnumSet(UNORDERED);
     }
 }

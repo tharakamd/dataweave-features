@@ -11,14 +11,17 @@ import org.apache.synapse.mediators.AbstractMediator;
 import java.util.Map;
 
 public class FilterObjectMediator extends AbstractMediator {
+
     private final JsonParser parser;
 
     public FilterObjectMediator() {
+
         parser = new JsonParser();
     }
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         String jsonPayload = JsonUtil.jsonPayloadToString(((Axis2MessageContext) mc).getAxis2MessageContext());
         JsonObject jsonObject = parser.parse(jsonPayload).getAsJsonObject();
 

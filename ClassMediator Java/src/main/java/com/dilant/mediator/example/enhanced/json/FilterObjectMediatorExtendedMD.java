@@ -27,6 +27,7 @@ public class FilterObjectMediatorExtendedMD extends AbstractExtendedMediator {
 
     @Override
     public void mediate(SimpleMessageContext mc) {
+
         mc.getJsonObjectStream()
                 .filter(objectEntry -> objectEntry.getValue().getAsInt() >= 2)
                 .collect(PayloadCollectors.toJsonObject(mc));

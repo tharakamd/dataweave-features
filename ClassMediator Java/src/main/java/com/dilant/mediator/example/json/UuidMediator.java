@@ -12,6 +12,7 @@ public class UuidMediator extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         String uuid = UUID.randomUUID().toString();
 
         try {

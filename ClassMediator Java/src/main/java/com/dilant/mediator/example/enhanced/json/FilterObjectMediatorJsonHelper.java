@@ -32,6 +32,7 @@ public class FilterObjectMediatorJsonHelper extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         JsonObject jsonObject = PayloadHelper.getPayloadJsonObject(mc);
 
         JsonObject result = new JsonObject();

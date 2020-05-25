@@ -15,6 +15,7 @@ public class SelectingXmlMediator extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         OMElement rootElement = mc.getEnvelope().getBody().getFirstElement();
 
         String id = rootElement.getAttribute(new QName("id")).getAttributeValue();

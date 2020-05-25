@@ -12,11 +12,13 @@ public class JsonValueExtractorMediator extends AbstractMediator {
     private final JsonParser parser;
 
     public JsonValueExtractorMediator() {
+
         parser = new JsonParser();
     }
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         String jsonPayload = JsonUtil.jsonPayloadToString(((Axis2MessageContext) mc).getAxis2MessageContext());
         JsonObject jsonObject = parser.parse(jsonPayload).getAsJsonObject();
 

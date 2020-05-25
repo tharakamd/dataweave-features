@@ -17,7 +17,8 @@ public class MapMediator extends AbstractMediator {
                     JsonObject currentObject = indexedJsonElement.getElement().getAsJsonObject();
                     JsonObject object = new JsonObject();
                     object.add("index", new JsonPrimitive(indexedJsonElement.getIndex()));
-                    object.add("Full Name", new JsonPrimitive(currentObject.get("FirstName").getAsString() + " " + currentObject.get("LastName").getAsString()));
+                    object.add("Full Name", new JsonPrimitive(currentObject.get("FirstName").getAsString() + " " +
+                            currentObject.get("LastName").getAsString()));
                     object.add("Company", currentObject.get("Company"));
                     return object;
                 })

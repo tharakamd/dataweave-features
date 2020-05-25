@@ -16,11 +16,13 @@ public class DynamicElementMediator extends AbstractMediator {
     private final JsonParser parser;
 
     public DynamicElementMediator() {
+
         parser = new JsonParser();
     }
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         String jsonPayload = JsonUtil.jsonPayloadToString(((Axis2MessageContext) mc).getAxis2MessageContext());
         JsonObject jsonObject = parser.parse(jsonPayload).getAsJsonObject();
 

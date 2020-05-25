@@ -15,11 +15,13 @@ public class FilterMediator extends AbstractMediator {
     private final JsonParser parser;
 
     public FilterMediator() {
+
         parser = new JsonParser();
     }
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         String jsonPayload = JsonUtil.jsonPayloadToString(((Axis2MessageContext) mc).getAxis2MessageContext());
         JsonArray jsonArray = parser.parse(jsonPayload).getAsJsonArray();
 

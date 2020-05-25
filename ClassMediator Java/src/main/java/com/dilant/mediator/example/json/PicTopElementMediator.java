@@ -14,6 +14,7 @@ public class PicTopElementMediator extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         try {
 
             JsonObject root = PayloadHelper.getPayloadJsonElement(mc).getAsJsonObject();
@@ -24,7 +25,6 @@ public class PicTopElementMediator extends AbstractMediator {
                     .sorted(Comparator.comparingInt(o -> o.get("score").getAsInt()))
                     .limit(limit)
                     .collect(PayloadCollectors.toJsonArray(mc));
-
 
         } catch (JaxenException e) {
             e.printStackTrace();

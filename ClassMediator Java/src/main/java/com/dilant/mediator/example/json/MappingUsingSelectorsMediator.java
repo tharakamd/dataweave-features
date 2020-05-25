@@ -12,6 +12,7 @@ public class MappingUsingSelectorsMediator extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         try {
             JsonArray array = PayloadHelper.getPayloadJsonElement(mc, "$..users[*]").getAsJsonArray();
 

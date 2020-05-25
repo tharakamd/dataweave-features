@@ -8,6 +8,7 @@ import org.apache.synapse.mediators.AbstractMediator;
 import javax.xml.namespace.QName;
 
 public class InsertXmlTagMediator extends AbstractMediator {
+
     @Override
     public boolean mediate(MessageContext mc) {
 
@@ -18,7 +19,8 @@ public class InsertXmlTagMediator extends AbstractMediator {
                     titleElement.addAttribute("lang", "en", null);
                     titleElement.addAttribute("year", year, null);
 
-                    bookElement.getChildrenWithLocalName("author").forEachRemaining(authorElement -> ((OMElement) authorElement).addAttribute("loc", "US", null));
+                    bookElement.getChildrenWithLocalName("author").forEachRemaining(
+                            authorElement -> ((OMElement) authorElement).addAttribute("loc", "US", null));
 
                 });
 

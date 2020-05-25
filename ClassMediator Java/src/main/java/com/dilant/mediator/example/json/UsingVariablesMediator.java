@@ -11,6 +11,7 @@ public class UsingVariablesMediator extends AbstractMediator {
 
     @Override
     public boolean mediate(MessageContext mc) {
+
         JsonObject jsonObject = PayloadHelper.getPayloadJsonObject(mc);
 
         String test = " is awesome";

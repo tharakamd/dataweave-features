@@ -11,6 +11,7 @@ public class XmlArrayMapperMediatorExtendedMD extends AbstractExtendedMediator {
     private final OMFactory factory;
 
     public XmlArrayMapperMediatorExtendedMD() {
+
         factory = OMAbstractFactory.getOMFactory();
     }
 
