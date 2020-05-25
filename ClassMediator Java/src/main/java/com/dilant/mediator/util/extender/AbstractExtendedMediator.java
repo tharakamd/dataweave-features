@@ -29,9 +29,9 @@ public abstract class AbstractExtendedMediator extends AbstractMediator {
     }
 
     @Override
-    public boolean mediate(MessageContext messageContext) {
+    public final boolean mediate(MessageContext messageContext) {
         try {
-            mediate(new ExtendedMessageContext(messageContext));
+            mediate(new SimpleMessageContext(messageContext));
             return true;
         } catch (MCException e) {
             getLog(messageContext).error(e);
@@ -39,5 +39,5 @@ public abstract class AbstractExtendedMediator extends AbstractMediator {
         }
     }
 
-    public abstract void mediate(ExtendedMessageContext messageContext);
+    public abstract void mediate(SimpleMessageContext messageContext);
 }

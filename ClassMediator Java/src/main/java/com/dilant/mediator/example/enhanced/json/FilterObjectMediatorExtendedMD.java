@@ -21,12 +21,12 @@ package com.dilant.mediator.example.enhanced.json;
 
 import com.dilant.mediator.util.collector.PayloadCollectors;
 import com.dilant.mediator.util.extender.AbstractExtendedMediator;
-import com.dilant.mediator.util.extender.ExtendedMessageContext;
+import com.dilant.mediator.util.extender.SimpleMessageContext;
 
 public class FilterObjectMediatorExtendedMD extends AbstractExtendedMediator {
 
     @Override
-    public void mediate(ExtendedMessageContext mc) {
+    public void mediate(SimpleMessageContext mc) {
         mc.getJsonObjectStream()
                 .filter(objectEntry -> objectEntry.getValue().getAsInt() >= 2)
                 .collect(PayloadCollectors.toJsonObject(mc));

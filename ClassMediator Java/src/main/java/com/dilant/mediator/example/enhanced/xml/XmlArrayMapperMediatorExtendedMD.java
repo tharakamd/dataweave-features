@@ -1,7 +1,7 @@
 package com.dilant.mediator.example.enhanced.xml;
 
 import com.dilant.mediator.util.extender.AbstractExtendedMediator;
-import com.dilant.mediator.util.extender.ExtendedMessageContext;
+import com.dilant.mediator.util.extender.SimpleMessageContext;
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
@@ -15,9 +15,9 @@ public class XmlArrayMapperMediatorExtendedMD extends AbstractExtendedMediator {
     }
 
     @Override
-    public void mediate(ExtendedMessageContext mc) {
+    public void mediate(SimpleMessageContext mc) {
 
-        mc.getXmlChildElementsStream(mc)
+        mc.getXmlChildElementsStream()
                 .forEach(element -> {
                     OMElement firstNameElement = (OMElement) element.getChildrenWithLocalName("FirstName").next();
                     String firstName = firstNameElement.getText();

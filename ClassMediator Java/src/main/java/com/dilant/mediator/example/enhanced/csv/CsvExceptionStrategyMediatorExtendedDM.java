@@ -1,7 +1,7 @@
 package com.dilant.mediator.example.enhanced.csv;
 
 import com.dilant.mediator.util.extender.AbstractExtendedMediator;
-import com.dilant.mediator.util.extender.ExtendedMessageContext;
+import com.dilant.mediator.util.extender.SimpleMessageContext;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
@@ -9,7 +9,7 @@ import com.google.gson.JsonPrimitive;
 public class CsvExceptionStrategyMediatorExtendedDM extends AbstractExtendedMediator {
 
     @Override
-    public void mediate(ExtendedMessageContext mc) {
+    public void mediate(SimpleMessageContext mc) {
 
         JsonArray jsonArray = new JsonArray();
 

@@ -24,9 +24,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
+import org.apache.synapse.SynapseException;
 import org.apache.synapse.commons.json.JsonUtil;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
 
@@ -35,23 +37,25 @@ import java.util.Map;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class ExtendedMessageContext extends Axis2MessageContext {
+public class SimpleMessageContext {
 
-    public ExtendedMessageContext(MessageContext axisMsgCtx) {
-        super(((Axis2MessageContext) axisMsgCtx).getAxis2MessageContext(), axisMsgCtx.getConfiguration(), axisMsgCtx.getEnvironment());
+    private final MessageContext messageContext;
+
+    public SimpleMessageContext(MessageContext messageContext) {
+        this.messageContext = messageContext;
     }
 
     public Stream<JsonElement> getJsonArrayStream() {
-        return PayloadHelper.getJsonArrayStream(this);
+        return PayloadHelper.getJsonArrayStream(messageContext);
     }
 
     public Stream<Map.Entry<String, JsonElement>> getJsonObjectStream() {
-        JsonObject jsonObject = PayloadHelper.getPayloadJsonObject(this);
+        JsonObject jsonObject = PayloadHelper.getPayloadJsonObject(messageContext);
         return PayloadHelper.getJsonObjectStream(jsonObject);
     }
 
     public Stream<String[]> getCsvArrayStream(int linesToSkip) {
-        String csvText = org.apache.synapse.util.PayloadHelper.getTextPayload(this);
+        String csvText = org.apache.synapse.util.PayloadHelper.getTextPayload(messageContext);
         CSVReader csvReader = new CSVReaderBuilder(new StringReader(csvText)).withSkipLines(linesToSkip).build();
         return StreamSupport.stream(csvReader.spliterator(), false);
     }
@@ -63,20 +67,32 @@ public class ExtendedMessageContext extends Axis2MessageContext {
 
     public void setJsonPayload(String payload) {
 
-        org.apache.axis2.context.MessageContext axis2MessageContext = this.getAxis2MessageContext();
+        org.apache.axis2.context.MessageContext axis2MessageContext = ((Axis2MessageContext) messageContext).getAxis2MessageContext();
         axis2MessageContext.setProperty("messageType", "application/json");
         axis2MessageContext.setProperty("ContentType", "application/json");
 
         try {
-            JsonUtil.getNewJsonPayload(this.getAxis2MessageContext(),
+            JsonUtil.getNewJsonPayload(((Axis2MessageContext) messageContext).getAxis2MessageContext(),
                     payload, true, true);
         } catch (AxisFault axisFault) {
             throw new MCException(axisFault);
         }
     }
 
-    public Stream<OMElement> getXmlChildElementsStream(MessageContext mc) {
-        OMElement rootElement = mc.getEnvelope().getBody().getFirstElement();
+    public Stream<OMElement> getXmlChildElementsStream() {
+        OMElement rootElement = messageContext.getEnvelope().getBody().getFirstElement();
         return PayloadHelper.getXmlChildElementsStream(rootElement);
+    }
+
+    public void setTextPayload(String text) {
+        if (messageContext.getEnvelope() == null) {
+            try {
+                messageContext.setEnvelope(OMAbstractFactory.getSOAP12Factory()
+                        .createSOAPEnvelope());
+            } catch (Exception e) {
+                throw new SynapseException(e);
+            }
+        }
+        org.apache.synapse.util.PayloadHelper.setTextPayload(messageContext.getEnvelope(), text);
     }
 }

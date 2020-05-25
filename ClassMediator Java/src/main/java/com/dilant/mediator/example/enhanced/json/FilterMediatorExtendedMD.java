@@ -21,13 +21,13 @@ package com.dilant.mediator.example.enhanced.json;
 
 import com.dilant.mediator.util.collector.PayloadCollectors;
 import com.dilant.mediator.util.extender.AbstractExtendedMediator;
-import com.dilant.mediator.util.extender.ExtendedMessageContext;
+import com.dilant.mediator.util.extender.SimpleMessageContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 
 public class FilterMediatorExtendedMD extends AbstractExtendedMediator {
     @Override
-    public void mediate(ExtendedMessageContext mc) {
+    public void mediate(SimpleMessageContext mc) {
         mc.getJsonArrayStream()
                 .map(JsonElement::getAsInt)
                 .filter(item -> item >= 2)

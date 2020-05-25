@@ -1,6 +1,7 @@
 package com.dilant.mediator.util.collector;
 
 import com.dilant.mediator.util.PayloadHelper;
+import com.dilant.mediator.util.extender.SimpleMessageContext;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,10 +20,17 @@ import static java.util.stream.Collector.Characteristics.UNORDERED;
 
 public class JsonObjectCollector implements Collector<Map.Entry<String, JsonElement>, JsonObject, Boolean> {
 
-    private final MessageContext mc;
+    private final MessageContext messageContext;
+    private final SimpleMessageContext simpleMessageContext;
 
-    JsonObjectCollector(MessageContext mc) {
-        this.mc = mc;
+    JsonObjectCollector(MessageContext messageContext) {
+        this.messageContext = messageContext;
+        this.simpleMessageContext = null;
+    }
+
+    public JsonObjectCollector(SimpleMessageContext simpleMessageContext) {
+        this.simpleMessageContext = simpleMessageContext;
+        this.messageContext = null;
     }
 
     @Override
@@ -50,7 +58,11 @@ public class JsonObjectCollector implements Collector<Map.Entry<String, JsonElem
     public Function<JsonObject, Boolean> finisher() {
         return result -> {
             try {
-                PayloadHelper.setJsonPayload(mc, result);
+                if (messageContext != null) {
+                    PayloadHelper.setJsonPayload(messageContext, result);
+                } else {
+                    simpleMessageContext.setJsonPayload(result);
+                }
             } catch (AxisFault axisFault) {
                 return false;
             }

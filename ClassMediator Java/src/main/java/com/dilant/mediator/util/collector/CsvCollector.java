@@ -19,6 +19,7 @@
 
 package com.dilant.mediator.util.collector;
 
+import com.dilant.mediator.util.extender.SimpleMessageContext;
 import com.google.common.collect.Sets;
 import com.opencsv.CSVWriter;
 import org.apache.synapse.MessageContext;
@@ -40,9 +41,16 @@ import static java.util.stream.Collector.Characteristics.UNORDERED;
 public class CsvCollector implements Collector<String[], List<String[]>, Boolean> {
 
     private final MessageContext mc;
+    private final SimpleMessageContext simpleMessageContext;
 
     CsvCollector(MessageContext mc) {
         this.mc = mc;
+        this.simpleMessageContext = null;
+    }
+
+    public CsvCollector(SimpleMessageContext simpleMessageContext) {
+        this.simpleMessageContext = simpleMessageContext;
+        this.mc = null;
     }
 
     @Override
@@ -78,7 +86,12 @@ public class CsvCollector implements Collector<String[], List<String[]>, Boolean
                 csvWriter.close();
                 stringWriter.flush();
                 String resultPayload = stringWriter.toString();
-                PayloadHelper.setTextPayload(mc, resultPayload);
+                if (mc != null) {
+                    PayloadHelper.setTextPayload(mc, resultPayload);
+                } else {
+                    simpleMessageContext.setTextPayload(resultPayload);
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;
