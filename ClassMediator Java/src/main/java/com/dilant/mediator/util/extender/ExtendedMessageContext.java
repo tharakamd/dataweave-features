@@ -24,6 +24,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
@@ -72,5 +73,10 @@ public class ExtendedMessageContext extends Axis2MessageContext {
         } catch (AxisFault axisFault) {
             throw new MCException(axisFault);
         }
+    }
+
+    public Stream<OMElement> getXmlChildElementsStream(MessageContext mc) {
+        OMElement rootElement = mc.getEnvelope().getBody().getFirstElement();
+        return PayloadHelper.getXmlChildElementsStream(rootElement);
     }
 }
