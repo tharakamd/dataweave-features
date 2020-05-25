@@ -21,6 +21,9 @@ package com.dilant.mediator.util;
 
 import com.google.gson.JsonElement;
 
+/**
+ * Represents a JsonElement along with it's position in the Json Array.
+ */
 public class IndexedJsonElement {
 
     private int index;

@@ -19,6 +19,7 @@
 
 package com.dilant.mediator.util.collector;
 
+import com.dilant.mediator.util.extender.MCException;
 import com.dilant.mediator.util.extender.SimpleMessageContext;
 import com.google.common.collect.Sets;
 import com.opencsv.CSVWriter;
@@ -102,8 +103,7 @@ public class CsvCollector implements Collector<String[], List<String[]>, Boolean
                 }
 
             } catch (IOException e) {
-                e.printStackTrace(); // todo:: replace with a logger
-                return false;
+                throw new MCException(e);
             }
 
             return true;

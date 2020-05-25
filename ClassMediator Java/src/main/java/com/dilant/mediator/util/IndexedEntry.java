@@ -23,6 +23,9 @@ import com.google.gson.JsonElement;
 
 import java.util.Map;
 
+/**
+ * Represents an element of a Json Object with the index of the element in the parent Json Object
+ */
 public class IndexedEntry {
 
     private int index;

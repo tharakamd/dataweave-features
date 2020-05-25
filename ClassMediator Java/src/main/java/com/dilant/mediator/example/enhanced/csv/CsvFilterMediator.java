@@ -35,7 +35,7 @@ public class CsvFilterMediator extends AbstractMediator {
             String content = writer.toString();
             PayloadHelper.setTextPayload(mc, content);
         } catch (IOException e) {
-            e.printStackTrace();
+            getLog(mc).error(e);
         }
 
         return true;
