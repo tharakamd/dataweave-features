@@ -31,6 +31,12 @@
 * [Dates](/report/dates.md)
 * [Date and time operation](/report/date_time.md)
 
+### Simple Mediator Examples
+
+* [Example 1](/simple%20mediator/example_1.md)
+* [Example 2](/simple%20mediator/example_2.md)
+* [Example 3](/simple%20mediator/example_3.md)
+
 ### Reference
 
 * [Datawave tutorials](https://developer.mulesoft.com/tutorials-and-howtos)
