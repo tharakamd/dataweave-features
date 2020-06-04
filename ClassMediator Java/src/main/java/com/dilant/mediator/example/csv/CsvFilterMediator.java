@@ -1,9 +1,10 @@
+/*
 package com.dilant.mediator.example.csv;
 
 import com.dilant.mediator.util.PayloadHelper;
-import com.dilant.mediator.util.collector.PayloadCollectors;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
+import org.apache.synapse.mediators.util.PayloadCollectors;
 
 public class CsvFilterMediator extends AbstractMediator {
 
@@ -16,3 +17,4 @@ public class CsvFilterMediator extends AbstractMediator {
 
     }
 }
+*/

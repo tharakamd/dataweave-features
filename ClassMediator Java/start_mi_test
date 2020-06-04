@@ -1,0 +1,2 @@
+#!/bin/bash
+sh /Users/dilanth/mitest/wso2mi-1.2.0-SNAPSHOT/bin/micro-integrator.sh

@@ -1,11 +1,12 @@
+/*
 package com.dilant.mediator.example.json;
 
 import com.dilant.mediator.util.PayloadHelper;
-import com.dilant.mediator.util.collector.PayloadCollectors;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
+import org.apache.synapse.mediators.PayloadCollectors;
 import org.jaxen.JaxenException;
 
 public class PluckMediator extends AbstractMediator {
@@ -32,3 +33,4 @@ public class PluckMediator extends AbstractMediator {
         return true;
     }
 }
+*/

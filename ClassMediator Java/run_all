@@ -1,0 +1,4 @@
+#!/bin/bash
+source ./add_to_mi_test
+source ./cp_synapse_to_mi
+source ./start_mi_test

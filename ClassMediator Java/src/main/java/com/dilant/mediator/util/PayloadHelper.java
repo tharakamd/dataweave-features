@@ -32,6 +32,8 @@ import org.apache.axis2.AxisFault;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.commons.json.JsonUtil;
 import org.apache.synapse.core.axis2.Axis2MessageContext;
+import org.apache.synapse.mediators.util.IndexedEntry;
+import org.apache.synapse.mediators.util.IndexedJsonElement;
 import org.apache.synapse.util.xpath.SynapseJsonPath;
 import org.jaxen.JaxenException;
 

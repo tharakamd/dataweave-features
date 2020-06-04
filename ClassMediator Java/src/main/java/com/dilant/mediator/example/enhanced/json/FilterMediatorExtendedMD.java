@@ -19,11 +19,10 @@
 
 package com.dilant.mediator.example.enhanced.json;
 
-import com.dilant.mediator.util.collector.PayloadCollectors;
-import com.dilant.mediator.util.extender.AbstractExtendedMediator;
-import com.dilant.mediator.util.extender.SimpleMessageContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import org.apache.synapse.mediators.AbstractExtendedMediator;
+import org.apache.synapse.mediators.util.SimpleMessageContext;
 
 public class FilterMediatorExtendedMD extends AbstractExtendedMediator {
 
@@ -34,6 +33,6 @@ public class FilterMediatorExtendedMD extends AbstractExtendedMediator {
                 .map(JsonElement::getAsInt)
                 .filter(item -> item >= 2)
                 .map(JsonPrimitive::new)
-                .collect(PayloadCollectors.toJsonArray(mc));
+                .collect(mc.toJsonArray());
     }
 }

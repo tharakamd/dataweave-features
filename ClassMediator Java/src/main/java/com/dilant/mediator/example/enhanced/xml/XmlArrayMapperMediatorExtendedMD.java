@@ -1,10 +1,10 @@
 package com.dilant.mediator.example.enhanced.xml;
 
-import com.dilant.mediator.util.extender.AbstractExtendedMediator;
-import com.dilant.mediator.util.extender.SimpleMessageContext;
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
+import org.apache.synapse.mediators.AbstractExtendedMediator;
+import org.apache.synapse.mediators.util.SimpleMessageContext;
 
 public class XmlArrayMapperMediatorExtendedMD extends AbstractExtendedMediator {
 

@@ -1,0 +1,6 @@
+#!/bin/bash
+mi_plugins='/Users/dilanth/mitest/wso2mi-1.2.0-SNAPSHOT/wso2/components/plugins/'
+syapse_target='/Users/dilanth/Codes/wso2-synapse-my/wso2-synapse/modules/core/target/'
+rm "$mi_plugins"synapse-core_2.1.7-wso2v167-SNAPSHOT.jar || true
+cp "$syapse_target"synapse-core-2.1.7-wso2v167-SNAPSHOT.jar "$mi_plugins"synapse-core_2.1.7.wso2v167-SNAPSHOT.jar
+

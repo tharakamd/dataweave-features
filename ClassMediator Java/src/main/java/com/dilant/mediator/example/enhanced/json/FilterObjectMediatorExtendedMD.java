@@ -19,9 +19,8 @@
 
 package com.dilant.mediator.example.enhanced.json;
 
-import com.dilant.mediator.util.collector.PayloadCollectors;
-import com.dilant.mediator.util.extender.AbstractExtendedMediator;
-import com.dilant.mediator.util.extender.SimpleMessageContext;
+import org.apache.synapse.mediators.AbstractExtendedMediator;
+import org.apache.synapse.mediators.util.SimpleMessageContext;
 
 public class FilterObjectMediatorExtendedMD extends AbstractExtendedMediator {
 
@@ -30,7 +29,7 @@ public class FilterObjectMediatorExtendedMD extends AbstractExtendedMediator {
 
         mc.getJsonObjectStream()
                 .filter(objectEntry -> objectEntry.getValue().getAsInt() >= 2)
-                .collect(PayloadCollectors.toJsonObject(mc));
+                .collect(mc.toJsonObject());
     }
 
 }

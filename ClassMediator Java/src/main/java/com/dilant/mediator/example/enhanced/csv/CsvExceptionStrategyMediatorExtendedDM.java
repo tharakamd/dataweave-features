@@ -1,10 +1,10 @@
 package com.dilant.mediator.example.enhanced.csv;
 
-import com.dilant.mediator.util.extender.AbstractExtendedMediator;
-import com.dilant.mediator.util.extender.SimpleMessageContext;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import org.apache.synapse.mediators.AbstractExtendedMediator;
+import org.apache.synapse.mediators.util.SimpleMessageContext;
 
 public class CsvExceptionStrategyMediatorExtendedDM extends AbstractExtendedMediator {
 

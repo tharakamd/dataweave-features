@@ -15,14 +15,15 @@
  * specific language governing permissions and limitations
  * under the License.
  *
- */
+ *//*
+
 
 package com.dilant.mediator.example.enhanced.json;
 
 import com.dilant.mediator.util.PayloadHelper;
-import com.dilant.mediator.util.collector.PayloadCollectors;
 import org.apache.synapse.MessageContext;
 import org.apache.synapse.mediators.AbstractMediator;
+import org.apache.synapse.mediators.util.PayloadCollectors;
 
 public class FilterObjectMediatorElementCollector extends AbstractMediator {
 
@@ -35,3 +36,4 @@ public class FilterObjectMediatorElementCollector extends AbstractMediator {
     }
 
 }
+*/
