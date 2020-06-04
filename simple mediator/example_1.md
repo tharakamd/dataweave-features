@@ -180,3 +180,42 @@ public void mediate(SimpleMessageContext mc) {
 
 }
 ```
+
+#### Scenario 5
+Iterating json object
+
+*output*
+
+```json
+{
+    "results": [
+        {
+            "key": "first_name",
+            "value": "Lissie"
+        },
+        {
+            "key": "last_name",
+            "value": "Linguard"
+        },
+        {
+            "key": "gender",
+            "value": "Female"
+        }
+    ]
+}
+```
+
+*code*
+
+```java
+public void mediate(SimpleMessageContext mc) {
+  mc.getJsonObjectStream("$.[0]")
+            .map( entry -> {
+                        JsonObject jsonObject = new JsonObject();
+                        jsonObject.add("key", new JsonPrimitive(entry.getKey()));
+                        jsonObject.add("value", entry.getValue());
+                        return jsonObject;
+                    }
+                ).collect(mc.collectToJsonArray("results"));
+}
+```
