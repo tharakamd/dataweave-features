@@ -32,15 +32,30 @@
 #### Output
 
 ``` json
-{
-  "index": "admins",
-  "accountInfo": [
-    {
-      "Name": "Max",
-      "Company": "MuleSoft"
-    }
-  ]
-}
+[
+	{
+		"index": "users",
+		"accountInfo": [
+			{
+				"Name": "Jordan",
+				"Company": "MuleSoft"
+			},
+			{
+				"Name": "Bob",
+				"Company": "Salesforce"
+			}
+		]
+	},
+	{
+		"index": "admins",
+		"accountInfo": [
+			{
+				"Name": "Max",
+				"Company": "MuleSoft"
+			}
+		]
+	}
+]
 ```
 
 #### Dataweave Script
@@ -57,3 +72,11 @@ payload.accountType[0] mapObject (value, key) -> {
 
 #### Groovy Script
 
+``` groovy
+payload.accountType[0].collect{ item ->
+    [
+            "index": item.properties.key,
+            "accountInfo": item.properties.value
+    ]
+}
+```
